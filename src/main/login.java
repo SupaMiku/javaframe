@@ -30,13 +30,13 @@ public class login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        fullname = new javax.swing.JTextField();
-        fullname1 = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        pass = new javax.swing.JPasswordField();
 
         jLabel3.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 0));
@@ -52,21 +52,13 @@ public class login extends javax.swing.JFrame {
         jLabel1.setText("LOG IN ACCOUNT");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 260, 60));
 
-        fullname.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        fullname.addActionListener(new java.awt.event.ActionListener() {
+        email.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fullnameActionPerformed(evt);
+                emailActionPerformed(evt);
             }
         });
-        jPanel1.add(fullname, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, 230, 40));
-
-        fullname1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        fullname1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fullname1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(fullname1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, 230, 40));
+        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, 230, 40));
 
         jPanel3.setBackground(new java.awt.Color(0, 204, 0));
 
@@ -97,6 +89,11 @@ public class login extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         jButton1.setForeground(new java.awt.Color(0, 102, 0));
         jButton1.setText("LOG IN");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -109,6 +106,13 @@ public class login extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(0, 102, 0));
         jButton2.setText("REGISTER");
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 350, 110, 60));
+
+        pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passActionPerformed(evt);
+            }
+        });
+        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, 230, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,17 +128,22 @@ public class login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fullnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullnameActionPerformed
+    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fullnameActionPerformed
-
-    private void fullname1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullname1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fullname1ActionPerformed
+    }//GEN-LAST:event_emailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
+
+    }//GEN-LAST:event_passActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+
+       // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -172,8 +181,7 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField fullname;
-    private javax.swing.JTextField fullname1;
+    private javax.swing.JTextField email;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -182,5 +190,6 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPasswordField pass;
     // End of variables declaration//GEN-END:variables
 }

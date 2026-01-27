@@ -6,7 +6,7 @@
 package main;
 
 import config.conf;
-import config.conf;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,7 +33,6 @@ public class register extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        pass = new javax.swing.JTextField();
         fullname = new javax.swing.JTextField();
         email = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -41,6 +40,7 @@ public class register extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        pass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -67,14 +67,6 @@ public class register extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 102, 0));
         jLabel1.setText("CREATE AN ACCOUNT");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 370, 60));
-
-        pass.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        pass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passActionPerformed(evt);
-            }
-        });
-        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 230, 40));
 
         fullname.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         fullname.addActionListener(new java.awt.event.ActionListener() {
@@ -140,15 +132,18 @@ public class register extends javax.swing.JFrame {
         });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 370, 120, 50));
 
+        pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passActionPerformed(evt);
+            }
+        });
+        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 230, 40));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, -1));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
-
-    }//GEN-LAST:event_passActionPerformed
 
     private void fullnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullnameActionPerformed
         // TODO add your handling code here:
@@ -177,9 +172,40 @@ String sql = "INSERT INTO tbl_acc(name, email, pass, type, status) VALUES (?, ?,
     }//GEN-LAST:event_jButton3MouseEntered
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+    conf conf = new conf();
+
+    String sql = "INSERT INTO tbl_acc(name, email, pass, type, status) VALUES (?, ?, ?, ?, ?)";
+    String password = new String(pass.getPassword());
+
+    if (fullname.getText().isEmpty() || email.getText().isEmpty() || password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "All fields are required!");
+        return;
+    }
+
+    conf.addRecord(
+        sql,
+        fullname.getText(),
+        email.getText(),
+        password,
+        "ADMIN",
+        "PENDING"
+    );
+
+    JOptionPane.showMessageDialog(this, "Registration successful!");
+
+    // NAVIGATION
+    login login = new login();
+    login.setVisible(true);
+    this.dispose();
+
    
          
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,6 +254,6 @@ String sql = "INSERT INTO tbl_acc(name, email, pass, type, status) VALUES (?, ?,
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField pass;
+    private javax.swing.JPasswordField pass;
     // End of variables declaration//GEN-END:variables
 }
