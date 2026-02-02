@@ -5,6 +5,8 @@
  */
 package main;
 
+import config.conf;
+
 /**
  *
  * @author USER34
@@ -105,6 +107,11 @@ public class login extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         jButton2.setForeground(new java.awt.Color(0, 102, 0));
         jButton2.setText("REGISTER");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 350, 110, 60));
 
         pass.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +140,10 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_emailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+       conf conf = new conf();
+String sql = "SELECT * FROM tbl_acc WHERE email = ? AND pass = ?";
+
+            conf.addRecord(sql,email.getText(), pass.getText());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
@@ -144,6 +154,12 @@ public class login extends javax.swing.JFrame {
 
        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        register reg = new register();
+        reg.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

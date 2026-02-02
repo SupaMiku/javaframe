@@ -5,6 +5,9 @@
  */
 package admin;
 
+
+import java.awt.Color;
+
 /**
  *
  * @author USER34
@@ -17,6 +20,10 @@ public class admindashboard extends javax.swing.JFrame {
     public admindashboard() {
         initComponents();
     }
+    
+    Color navcolor = new Color (0,153,0);
+    Color headercolor = new Color (0,204,0);
+    Color bodycolor = new Color (0,255,0);
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,21 +34,180 @@ public class admindashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        navbar = new javax.swing.JPanel();
+        dashpanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        userpanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        bookspanel = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        transactionpanel = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        header = new javax.swing.JPanel();
+        jDesktopPane1 = new javax.swing.JDesktopPane();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel2.setBackground(new java.awt.Color(51, 255, 51));
+        jPanel2.setLayout(null);
+
+        navbar.setBackground(new java.awt.Color(0, 153, 0));
+        navbar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        dashpanel.setBackground(new java.awt.Color(0, 153, 0));
+        dashpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                dashpanelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                dashpanelMouseExited(evt);
+            }
+        });
+        dashpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("DASHBOARD");
+        dashpanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
+
+        navbar.add(dashpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 230, 50));
+
+        userpanel.setBackground(new java.awt.Color(0, 153, 0));
+        userpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                userpanelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                userpanelMouseExited(evt);
+            }
+        });
+        userpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("USER");
+        userpanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
+
+        navbar.add(userpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 230, 50));
+
+        bookspanel.setBackground(new java.awt.Color(0, 153, 0));
+        bookspanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bookspanelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bookspanelMouseExited(evt);
+            }
+        });
+        bookspanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("BOOKS");
+        bookspanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
+
+        navbar.add(bookspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 230, 50));
+
+        transactionpanel.setBackground(new java.awt.Color(0, 153, 0));
+        transactionpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                transactionpanelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                transactionpanelMouseExited(evt);
+            }
+        });
+        transactionpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("BORROW TRANSACTION");
+        transactionpanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
+
+        navbar.add(transactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 230, 50));
+
+        jPanel2.add(navbar);
+        navbar.setBounds(0, 0, 230, 480);
+
+        header.setBackground(new java.awt.Color(0, 204, 0));
+
+        javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
+        header.setLayout(headerLayout);
+        headerLayout.setHorizontalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 670, Short.MAX_VALUE)
+        );
+        headerLayout.setVerticalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(header);
+        header.setBounds(180, 0, 670, 60);
+
+        jDesktopPane1.setBackground(new java.awt.Color(0, 255, 0));
+
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 620, Short.MAX_VALUE)
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 430, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(jDesktopPane1);
+        jDesktopPane1.setBounds(230, 60, 620, 430);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 848, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void dashpanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpanelMouseEntered
+        dashpanel.setBackground(bodycolor);
+    }//GEN-LAST:event_dashpanelMouseEntered
+
+    private void dashpanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpanelMouseExited
+        dashpanel.setBackground(navcolor);
+    }//GEN-LAST:event_dashpanelMouseExited
+
+    private void userpanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpanelMouseEntered
+       userpanel.setBackground(bodycolor);
+    }//GEN-LAST:event_userpanelMouseEntered
+
+    private void userpanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpanelMouseExited
+       userpanel.setBackground(navcolor);
+    }//GEN-LAST:event_userpanelMouseExited
+
+    private void bookspanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookspanelMouseEntered
+        bookspanel.setBackground(bodycolor);
+    }//GEN-LAST:event_bookspanelMouseEntered
+
+    private void bookspanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookspanelMouseExited
+        bookspanel.setBackground(navcolor);
+    }//GEN-LAST:event_bookspanelMouseExited
+
+    private void transactionpanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transactionpanelMouseEntered
+         transactionpanel.setBackground(bodycolor);
+    }//GEN-LAST:event_transactionpanelMouseEntered
+
+    private void transactionpanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transactionpanelMouseExited
+        transactionpanel.setBackground(navcolor);
+    }//GEN-LAST:event_transactionpanelMouseExited
 
     /**
      * @param args the command line arguments
@@ -79,5 +245,17 @@ public class admindashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bookspanel;
+    private javax.swing.JPanel dashpanel;
+    private javax.swing.JPanel header;
+    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel navbar;
+    private javax.swing.JPanel transactionpanel;
+    private javax.swing.JPanel userpanel;
     // End of variables declaration//GEN-END:variables
 }
