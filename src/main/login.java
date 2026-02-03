@@ -5,7 +5,9 @@
  */
 package main;
 
+import admin.admindashboard;
 import config.conf;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -140,10 +142,20 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_emailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       conf conf = new conf();
-String sql = "SELECT * FROM tbl_acc WHERE email = ? AND pass = ?";
+        conf c = new conf();
 
-            conf.addRecord(sql,email.getText(), pass.getText());
+    String sql = "SELECT * FROM tbl_acc WHERE email = ? AND pass = ? AND status = ?";
+     if (c.authenticate(sql, email.getText(), pass.getText(), "Active")) {
+        JOptionPane.showMessageDialog(null, "LOGIN SUCCESS");
+        
+        admindashboard ad = new admindashboard();
+        ad.setVisible(true);
+        this.dispose();
+    } else {
+        JOptionPane.showMessageDialog(null, "Invalid Credentials");
+    }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
@@ -152,7 +164,7 @@ String sql = "SELECT * FROM tbl_acc WHERE email = ? AND pass = ?";
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
 
-       // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

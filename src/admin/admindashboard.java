@@ -45,7 +45,8 @@ public class admindashboard extends javax.swing.JFrame {
         transactionpanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        jLabel5 = new javax.swing.JLabel();
+        maindesktop = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,6 +76,9 @@ public class admindashboard extends javax.swing.JFrame {
 
         userpanel.setBackground(new java.awt.Color(0, 153, 0));
         userpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userpanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 userpanelMouseEntered(evt);
             }
@@ -131,36 +135,31 @@ public class admindashboard extends javax.swing.JFrame {
         navbar.setBounds(0, 0, 230, 480);
 
         header.setBackground(new java.awt.Color(0, 204, 0));
+        header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
-        header.setLayout(headerLayout);
-        headerLayout.setHorizontalGroup(
-            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
-        );
-        headerLayout.setVerticalGroup(
-            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 60, Short.MAX_VALUE)
-        );
+        jLabel5.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("ADMIN DASHBOARB");
+        header.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 17, 620, 30));
 
         jPanel2.add(header);
         header.setBounds(180, 0, 670, 60);
 
-        jDesktopPane1.setBackground(new java.awt.Color(0, 255, 0));
+        maindesktop.setBackground(new java.awt.Color(0, 255, 0));
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout maindesktopLayout = new javax.swing.GroupLayout(maindesktop);
+        maindesktop.setLayout(maindesktopLayout);
+        maindesktopLayout.setHorizontalGroup(
+            maindesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 620, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        maindesktopLayout.setVerticalGroup(
+            maindesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 430, Short.MAX_VALUE)
         );
 
-        jPanel2.add(jDesktopPane1);
-        jDesktopPane1.setBounds(230, 60, 620, 430);
+        jPanel2.add(maindesktop);
+        maindesktop.setBounds(230, 60, 620, 430);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -209,6 +208,12 @@ public class admindashboard extends javax.swing.JFrame {
         transactionpanel.setBackground(navcolor);
     }//GEN-LAST:event_transactionpanelMouseExited
 
+    private void userpanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpanelMouseClicked
+        userstable us = new userstable();
+        us.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_userpanelMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -248,12 +253,13 @@ public class admindashboard extends javax.swing.JFrame {
     private javax.swing.JPanel bookspanel;
     private javax.swing.JPanel dashpanel;
     private javax.swing.JPanel header;
-    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JDesktopPane maindesktop;
     private javax.swing.JPanel navbar;
     private javax.swing.JPanel transactionpanel;
     private javax.swing.JPanel userpanel;
