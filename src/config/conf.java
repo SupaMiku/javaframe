@@ -92,6 +92,12 @@ public String authenticate(String sql, Object... values) {
 
         try (ResultSet rs = pstmt.executeQuery()) {
             if (rs.next()) {
+                // This is where the Session Management happens
+            session.a_id = rs.getInt("a_id");
+            session.username = rs.getString("name");
+            session.email = rs.getString("email");
+            session.type = rs.getString("type");
+            session.status = rs.getString("status");
                 return rs.getString("type");
             }
         }
