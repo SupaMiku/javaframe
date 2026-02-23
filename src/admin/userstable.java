@@ -20,6 +20,12 @@ public class userstable extends javax.swing.JFrame {
     public userstable() {
         initComponents();
         displayUsers();
+        search.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            searchUser();
+        }
+    });
+     
     }
     
     void displayUsers(){
@@ -28,7 +34,7 @@ public class userstable extends javax.swing.JFrame {
         con.displayData(sql, usertable);
     
     }
-     
+   
     Color navcolor = new Color (0,153,0);
     Color headercolor = new Color (0,204,0);
     Color bodycolor = new Color (0,255,0);
@@ -56,11 +62,11 @@ public class userstable extends javax.swing.JFrame {
         headeruser = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        search = new javax.swing.JButton();
+        add = new javax.swing.JButton();
+        edit = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         usertable = new javax.swing.JTable();
 
@@ -170,22 +176,37 @@ public class userstable extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 255, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton2.setBackground(new java.awt.Color(0, 153, 0));
-        jButton2.setText("SEARCH");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 90, 40));
+        search.setBackground(new java.awt.Color(0, 153, 0));
+        search.setText("SEARCH");
+        jPanel1.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 90, 40));
 
-        jButton3.setBackground(new java.awt.Color(0, 153, 0));
-        jButton3.setText("ADD");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 40));
+        add.setBackground(new java.awt.Color(0, 153, 0));
+        add.setText("ADD");
+        add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addMouseClicked(evt);
+            }
+        });
+        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 40));
 
-        jButton4.setBackground(new java.awt.Color(0, 153, 0));
-        jButton4.setText("UPDATE");
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 90, 40));
+        edit.setBackground(new java.awt.Color(0, 153, 0));
+        edit.setText("EDIT");
+        edit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editMouseClicked(evt);
+            }
+        });
+        jPanel1.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 90, 40));
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 200, 40));
 
-        jButton5.setBackground(new java.awt.Color(0, 153, 0));
-        jButton5.setText("DELETE");
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 90, 40));
+        delete.setBackground(new java.awt.Color(0, 153, 0));
+        delete.setText("DELETE");
+        delete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteMouseClicked(evt);
+            }
+        });
+        jPanel1.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 90, 40));
 
         usertable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -242,6 +263,19 @@ public class userstable extends javax.swing.JFrame {
         transactionpanel.setBackground(navcolor);
     }//GEN-LAST:event_transactionpanelMouseExited
 
+    private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
+      
+       
+    }//GEN-LAST:event_addMouseClicked
+
+    private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editMouseClicked
+
+    private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -278,14 +312,13 @@ public class userstable extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton add;
     private javax.swing.JPanel bookspanel;
     private javax.swing.JPanel dashpanel;
+    private javax.swing.JButton delete;
+    private javax.swing.JButton edit;
     private javax.swing.JPanel header;
     private javax.swing.JPanel headeruser;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -295,9 +328,22 @@ public class userstable extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel navbar;
+    private javax.swing.JButton search;
     private javax.swing.JPanel transactionpanel;
     private javax.swing.JPanel userpanel;
     private javax.swing.JLabel userstable;
     private javax.swing.JTable usertable;
     // End of variables declaration//GEN-END:variables
+
+    private void editUser() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void deleteUser() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void searchUser() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
