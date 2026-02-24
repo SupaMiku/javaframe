@@ -7,6 +7,7 @@ package admin;
 
 import config.conf;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -187,6 +188,11 @@ public class userstable extends javax.swing.JFrame {
                 addMouseClicked(evt);
             }
         });
+        add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addActionPerformed(evt);
+            }
+        });
         jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 40));
 
         edit.setBackground(new java.awt.Color(0, 153, 0));
@@ -194,6 +200,11 @@ public class userstable extends javax.swing.JFrame {
         edit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editMouseClicked(evt);
+            }
+        });
+        edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editActionPerformed(evt);
             }
         });
         jPanel1.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 90, 40));
@@ -204,6 +215,11 @@ public class userstable extends javax.swing.JFrame {
         delete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 deleteMouseClicked(evt);
+            }
+        });
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
             }
         });
         jPanel1.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 90, 40));
@@ -224,6 +240,7 @@ public class userstable extends javax.swing.JFrame {
         jPanel1.setBounds(230, 60, 620, 420);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void dashpanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpanelMouseEntered
@@ -275,6 +292,93 @@ public class userstable extends javax.swing.JFrame {
     private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteMouseClicked
+
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        AddEditUser form = new AddEditUser();
+    form.setAddMode();
+    form.setVisible(true);
+    
+    // Refresh table automatically when the add/edit form is closed
+    form.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent e) {
+            displayUsers();
+        }
+    });
+    }//GEN-LAST:event_addActionPerformed
+
+    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
+     int row = usertable.getSelectedRow();
+    if (row < 0) {
+        JOptionPane.showMessageDialog(this, "Please select a user to edit.", "No Selection", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    try {
+        int a_id = Integer.parseInt( usertable.getValueAt(row, 0).toString() );
+
+        String uid = safeGet(row, 1);   // userid
+        String nam = safeGet(row, 2);   // name
+        String em  = safeGet(row, 3);   // email
+        String gen = safeGet(row, 4);   // gender
+        String typ = safeGet(row, 5);   // type
+        String adr = safeGet(row, 7);   // address (if exists)
+
+        AddEditUser form = new AddEditUser();
+        form.setEditMode(a_id, uid, nam, em, gen, typ, adr);
+        form.setVisible(true);
+
+        form.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                displayUsers();
+            }
+        });
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error reading row: " + ex.getMessage(), "Edit Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
+}
+
+// Helper
+private String safeGet(int row, int col) {
+    try {
+        Object val = usertable.getValueAt(row, col);
+        return val != null ? val.toString() : "";
+    } catch (Exception e) {
+        return "";
+    }
+    }//GEN-LAST:event_editActionPerformed
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+       int row = usertable.getSelectedRow();
+    if (row < 0) {
+        JOptionPane.showMessageDialog(this, "Please select a user to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    int a_id = Integer.parseInt(usertable.getValueAt(row, 0).toString());
+    String username = usertable.getValueAt(row, 2).toString();  // username column
+
+    int choice = JOptionPane.showConfirmDialog(this,
+        "Delete user: " + username + " ?",
+        "Confirm Delete",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.WARNING_MESSAGE);
+
+    if (choice == JOptionPane.YES_OPTION) {
+        conf con = new conf();
+        String sql = "DELETE FROM tbl_acc WHERE a_id = ?";
+        boolean ok = con.executeUpdate(sql, a_id);
+
+        if (ok) {
+            JOptionPane.showMessageDialog(this, "User deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            displayUsers();
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to delete user.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    }//GEN-LAST:event_deleteActionPerformed
 
     /**
      * @param args the command line arguments

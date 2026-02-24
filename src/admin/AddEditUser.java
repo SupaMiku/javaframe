@@ -5,18 +5,73 @@
  */
 package admin;
 
+import config.conf;
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Administrator
  */
 public class AddEditUser extends javax.swing.JFrame {
 
+    private String selectedGender;
+    private boolean isEditMode = false;
+private int edit_a_id = -1;     // we will store the real database primary key (a_id)
+
+public void setAddMode() {
+    isEditMode = false;
+    edit_a_id = -1;
+    clearAllFields();
+    setTitle("Add New User");
+    user_label.setText("SAVE");
+    // No userid anymore
+}
+
+public void setEditMode(int a_id, String uid, String uname, String em, 
+                        String gender, String stat, String addr) {
+    isEditMode = true;
+    edit_a_id = a_id;
+
+    username.setText(uname);       // name → username field
+    email.setText(em);
+
+    if ("Male".equalsIgnoreCase(gender)) {
+        male.doClick();
+    } else if ("Female".equalsIgnoreCase(gender)) {
+        female.doClick();
+    }
+
+    jComboBox1.setSelectedItem(gender);
+    jTextArea1.setText(addr);
+
+    setTitle("Edit User");
+    user_label.setText("UPDATE");
+}
+
+private void clearAllFields() {
+    userid.setText("");
+    username.setText("");
+    email.setText("");
+    male.setSelected(false);
+    female.setSelected(false);
+    selectedGender = "";
+    jComboBox1.setSelectedIndex(0);
+    jTextArea1.setText("");
+}
     /**
      * Creates new form AddEditUser
      */
     public AddEditUser() {
         initComponents();
+        setTitle("Add New User");
+user_label.setText("SAVE");
+        ButtonGroup bg = new ButtonGroup();
+    bg.add(male);
+    bg.add(female);
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,18 +87,23 @@ public class AddEditUser extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         userid = new javax.swing.JTextField();
-        userID = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         email = new javax.swing.JTextField();
-        Username = new javax.swing.JLabel();
-        Email = new javax.swing.JLabel();
-        gender = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        gender1 = new javax.swing.JLabel();
+        genderLabel = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        address = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        userlabel = new javax.swing.JPanel();
+        user_label = new javax.swing.JLabel();
+        male = new javax.swing.JRadioButton();
+        female = new javax.swing.JRadioButton();
+        id = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,26 +118,26 @@ public class AddEditUser extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("USER");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 480, 40));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 500, 40));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 60));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 60));
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         jLabel2.setText("Email:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 60, 30));
 
+        userid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         userid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 useridActionPerformed(evt);
             }
         });
-        jPanel1.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 120, 30));
-        jPanel1.add(userID, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 120, 30));
+        jPanel1.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 130, 30));
 
         jLabel4.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         jLabel4.setText("User ID:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 60, 30));
-        jPanel1.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 120, 30));
+        jPanel1.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 130, 30));
 
         jLabel5.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         jLabel5.setText("Username:");
@@ -88,36 +148,74 @@ public class AddEditUser extends javax.swing.JFrame {
                 emailActionPerformed(evt);
             }
         });
-        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 120, 30));
-        jPanel1.add(Username, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 120, 30));
-        jPanel1.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 120, 30));
+        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 130, 30));
 
-        gender.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
-        gender.setText("Gender:");
-        jPanel1.add(gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 60, 30));
+        genderLabel.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        genderLabel.setText("Gender:");
+        jPanel1.add(genderLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 60, 30));
 
-        jRadioButton1.setText("Male");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, 30));
+        status.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        status.setText("Status:");
+        jPanel1.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 60, 30));
 
-        jRadioButton2.setText("Female");
-        jPanel1.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, -1, 30));
-
-        gender1.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
-        gender1.setText("Status:");
-        jPanel1.add(gender1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 60, 30));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Married", "Single", "Divorced", "Lonely" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Single", "Married", "Divorced", "Lonely" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 110, 30));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 130, 30));
+
+        address.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        address.setText("Address:");
+        jPanel1.add(address, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 60, 30));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 170, 80));
+
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("IMAGE");
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 150, 108));
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, 170, 130));
+
+        userlabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userlabelMouseClicked(evt);
+            }
+        });
+        userlabel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        user_label.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        user_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_label.setText("LABEL");
+        userlabel.add(user_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 120, -1));
+
+        jPanel1.add(userlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 350, 120, 40));
+
+        male.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        male.setText("MALE");
+        male.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maleActionPerformed(evt);
+            }
+        });
+        jPanel1.add(male, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, 70, 30));
+
+        female.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        female.setText("FEMALE");
+        female.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                femaleActionPerformed(evt);
+            }
+        });
+        jPanel1.add(female, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 70, 30));
+        jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 130, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,10 +225,11 @@ public class AddEditUser extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
@@ -141,13 +240,90 @@ public class AddEditUser extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_useridActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
-
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void userlabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userlabelMouseClicked
+        if (username.getText().trim().isEmpty() ||
+        email.getText().trim().isEmpty() ||
+        selectedGender.isEmpty()) {
+        
+        JOptionPane.showMessageDialog(this,
+            "Please fill Username, Email, Gender",
+            "Required", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    conf con = new conf();
+    boolean success;
+    String sql;
+
+    String nameVal    = username.getText().trim();
+    String emailVal   = email.getText().trim();
+    String genderVal  = selectedGender;
+    String typeVal    = jComboBox1.getSelectedItem().toString();
+    String addressVal = jTextArea1.getText().trim();
+    String statusVal  = "Active";  // or add a field for this
+
+    if (isEditMode) {
+        sql = "UPDATE tbl_acc SET "
+            + "name = ?, email = ?, gender = ?, type = ?, address = ?, status = ? "
+            + "WHERE a_id = ?";
+
+        success = con.executeUpdate(sql,
+            nameVal, emailVal, genderVal, typeVal, addressVal, statusVal,
+            edit_a_id
+        );
+    } else {
+        sql = "INSERT INTO tbl_acc "
+            + "(name, email, gender, type, address, status) "
+            + "VALUES (?, ?, ?, ?, ?, ?)";
+
+        success = con.executeUpdate(sql,
+            nameVal, emailVal, genderVal, typeVal, addressVal, statusVal
+        );
+    }
+
+    if (success) {
+        JOptionPane.showMessageDialog(this,
+            isEditMode ? "User updated!" : "User added!",
+            "Success", JOptionPane.INFORMATION_MESSAGE);
+        if (!isEditMode) clearAllFields();
+        dispose();  // optional
+    } else {
+        JOptionPane.showMessageDialog(this, "Operation failed.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    sql = "INSERT INTO tbl_acc (name, email, gender, type, status, address) VALUES (?, ?, ?, ?, ?, ?)";
+success = con.executeUpdate(sql,
+    username.getText().trim(),
+    email.getText().trim(),
+    selectedGender,
+    jComboBox1.getSelectedItem().toString(),
+    "Active",
+    jTextArea1.getText().trim()
+);
+
+// UPDATE (Edit)
+sql = "UPDATE tbl_acc SET name = ?, email = ?, gender = ?, type = ?, status = ?, address = ? WHERE a_id = ?";
+success = con.executeUpdate(sql,
+    username.getText().trim(),
+    email.getText().trim(),
+    selectedGender,
+    jComboBox1.getSelectedItem().toString(),
+    "Active",
+    jTextArea1.getText().trim(),
+    edit_a_id
+);
+    }//GEN-LAST:event_userlabelMouseClicked
+
+    private void maleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleActionPerformed
+         selectedGender = "Male";
+    }//GEN-LAST:event_maleActionPerformed
+
+    private void femaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femaleActionPerformed
+        selectedGender = "Female";
+    }//GEN-LAST:event_femaleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -185,22 +361,31 @@ public class AddEditUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Email;
-    private javax.swing.JLabel Username;
+    private javax.swing.JLabel address;
     private javax.swing.JTextField email;
-    private javax.swing.JLabel gender;
-    private javax.swing.JLabel gender1;
+    public javax.swing.JRadioButton female;
+    private javax.swing.JLabel genderLabel;
+    private javax.swing.JLabel id;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JLabel userID;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    public javax.swing.JRadioButton male;
+    private javax.swing.JLabel status;
+    private javax.swing.JLabel user_label;
     private javax.swing.JTextField userid;
+    private javax.swing.JPanel userlabel;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
+
+    void setEditMode(int a_id, String nam, String em, String gen, String typ, String adr) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

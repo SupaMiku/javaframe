@@ -82,10 +82,10 @@ public class userForm extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("PROFILE");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 580, 30));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 590, 30));
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(230, 0, 580, 50);
+        jPanel1.setBounds(230, 0, 590, 41);
 
         jPanel2.setBackground(new java.awt.Color(0, 255, 0));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -140,7 +140,7 @@ public class userForm extends javax.swing.JFrame {
         jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, 140, 30));
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(230, 50, 580, 430);
+        jPanel2.setBounds(230, 40, 590, 450);
 
         navbar.setBackground(new java.awt.Color(0, 153, 0));
         navbar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -242,6 +242,7 @@ public class userForm extends javax.swing.JFrame {
         navbar.setBounds(0, 0, 230, 490);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void dashpanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpanelMouseEntered
