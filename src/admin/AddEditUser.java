@@ -25,39 +25,65 @@ public void setAddMode() {
     clearAllFields();
     setTitle("Add New User");
     user_label.setText("SAVE");
-    // No userid anymore
+
+    userid.setText("(auto)");
+    userid.setEditable(false);
+    userid.setBackground(new java.awt.Color(200, 200, 200)); // also grey, auto-assigned
+    userid.setVisible(true);
+    jLabel4.setVisible(true);
 }
 
-public void setEditMode(int a_id, String uid, String uname, String em, 
-                        String gender, String stat, String addr) {
-    isEditMode = true;
+public void setEditMode(int a_id, String uid, String nam, String em, 
+                        String gen, String typ, String adr) {
+ isEditMode = true;
     edit_a_id = a_id;
 
-    username.setText(uname);       // name → username field
-    email.setText(em);
+    username.setText(nam != null ? nam.trim() : "");
+    email.setText(em != null ? em.trim() : "");      // ← was bugged before (used "email" object instead of "em")
+    jTextArea1.setText(adr != null ? adr.trim() : "");
 
-    if ("Male".equalsIgnoreCase(gender)) {
-        male.doClick();
-    } else if ("Female".equalsIgnoreCase(gender)) {
-        female.doClick();
+    selectedGender = "";
+    male.setSelected(false);
+    female.setSelected(false);
+
+    if (gen != null) {
+        String g = gen.trim().toLowerCase();
+        if (g.equals("male")) {
+            male.setSelected(true);
+            selectedGender = "Male";
+        } else if (g.equals("female")) {
+            female.setSelected(true);
+            selectedGender = "Female";
+        }
     }
 
-    jComboBox1.setSelectedItem(gender);
-    jTextArea1.setText(addr);
+    if (typ != null && !typ.trim().isEmpty()) {
+        jComboBox1.setSelectedItem(typ.trim());
+    } else {
+        jComboBox1.setSelectedIndex(0);
+    }
 
-    setTitle("Edit User");
+    setTitle("Edit User – ID: " + a_id);
     user_label.setText("UPDATE");
+
+    // Hide ID field — cannot be changed
+    userid.setText(String.valueOf(a_id));
+userid.setEditable(false);
+userid.setBackground(new java.awt.Color(200, 200, 200)); // grey = not editable
+userid.setVisible(true);
+jLabel4.setVisible(true);
 }
 
 private void clearAllFields() {
-    userid.setText("");
-    username.setText("");
-    email.setText("");
-    male.setSelected(false);
-    female.setSelected(false);
-    selectedGender = "";
-    jComboBox1.setSelectedIndex(0);
-    jTextArea1.setText("");
+     userid.setText("");
+        username.setText("");
+        email.setText("");
+        male.setSelected(false);
+        female.setSelected(false);
+        selectedGender = "";
+        jComboBox1.setSelectedIndex(0);
+        jTextArea1.setText("");
+        id.setText("");
 }
     /**
      * Creates new form AddEditUser
@@ -245,76 +271,54 @@ user_label.setText("SAVE");
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void userlabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userlabelMouseClicked
-        if (username.getText().trim().isEmpty() ||
-        email.getText().trim().isEmpty() ||
-        selectedGender.isEmpty()) {
-        
-        JOptionPane.showMessageDialog(this,
-            "Please fill Username, Email, Gender",
-            "Required", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+         if (username.getText().trim().isEmpty() ||
+            email.getText().trim().isEmpty()    ||
+            selectedGender.isEmpty()) {
 
-    conf con = new conf();
-    boolean success;
-    String sql;
+            JOptionPane.showMessageDialog(this,
+                "Please fill in Username, Email, and Gender.",
+                "Required Fields", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    String nameVal    = username.getText().trim();
-    String emailVal   = email.getText().trim();
-    String genderVal  = selectedGender;
-    String typeVal    = jComboBox1.getSelectedItem().toString();
-    String addressVal = jTextArea1.getText().trim();
-    String statusVal  = "Active";  // or add a field for this
+        conf con = new conf();
+        String sql;
+        boolean success;
 
-    if (isEditMode) {
-        sql = "UPDATE tbl_acc SET "
-            + "name = ?, email = ?, gender = ?, type = ?, address = ?, status = ? "
-            + "WHERE a_id = ?";
+        String nameVal    = username.getText().trim();
+        String emailVal   = email.getText().trim();
+        String genderVal  = selectedGender;
+        String typeVal    = jComboBox1.getSelectedItem().toString();
+        String addressVal = jTextArea1.getText().trim();
+        String statusVal  = "Active";
 
-        success = con.executeUpdate(sql,
-            nameVal, emailVal, genderVal, typeVal, addressVal, statusVal,
-            edit_a_id
-        );
-    } else {
-        sql = "INSERT INTO tbl_acc "
-            + "(name, email, gender, type, address, status) "
-            + "VALUES (?, ?, ?, ?, ?, ?)";
+        if (isEditMode) {
+            // UPDATE — do NOT touch a_id
+            sql = "UPDATE tbl_acc SET "
+                + "name=?, email=?, gender=?, type=?, address=?, status=? "
+                + "WHERE a_id=?";
+            success = con.executeUpdate(sql,
+                nameVal, emailVal, genderVal, typeVal, addressVal, statusVal,
+                edit_a_id);
+        } else {
+            // INSERT — let the DB auto-assign a_id (AUTO_INCREMENT)
+            sql = "INSERT INTO tbl_acc (name, email, gender, type, address, status) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+            success = con.executeUpdate(sql,
+                nameVal, emailVal, genderVal, typeVal, addressVal, statusVal);
+        }
 
-        success = con.executeUpdate(sql,
-            nameVal, emailVal, genderVal, typeVal, addressVal, statusVal
-        );
-    }
-
-    if (success) {
-        JOptionPane.showMessageDialog(this,
-            isEditMode ? "User updated!" : "User added!",
-            "Success", JOptionPane.INFORMATION_MESSAGE);
-        if (!isEditMode) clearAllFields();
-        dispose();  // optional
-    } else {
-        JOptionPane.showMessageDialog(this, "Operation failed.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-    sql = "INSERT INTO tbl_acc (name, email, gender, type, status, address) VALUES (?, ?, ?, ?, ?, ?)";
-success = con.executeUpdate(sql,
-    username.getText().trim(),
-    email.getText().trim(),
-    selectedGender,
-    jComboBox1.getSelectedItem().toString(),
-    "Active",
-    jTextArea1.getText().trim()
-);
-
-// UPDATE (Edit)
-sql = "UPDATE tbl_acc SET name = ?, email = ?, gender = ?, type = ?, status = ?, address = ? WHERE a_id = ?";
-success = con.executeUpdate(sql,
-    username.getText().trim(),
-    email.getText().trim(),
-    selectedGender,
-    jComboBox1.getSelectedItem().toString(),
-    "Active",
-    jTextArea1.getText().trim(),
-    edit_a_id
-);
+        if (success) {
+            JOptionPane.showMessageDialog(this,
+                isEditMode ? "User updated successfully!" : "User added successfully!",
+                "Success", JOptionPane.INFORMATION_MESSAGE);
+            clearAllFields();
+            dispose();   // close the form → triggers windowClosed → refreshes table
+        } else {
+            JOptionPane.showMessageDialog(this,
+                "Operation failed. Please try again.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_userlabelMouseClicked
 
     private void maleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleActionPerformed
@@ -385,7 +389,5 @@ success = con.executeUpdate(sql,
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 
-    void setEditMode(int a_id, String nam, String em, String gen, String typ, String adr) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 }

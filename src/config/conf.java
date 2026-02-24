@@ -74,11 +74,13 @@ public String authenticate(String sql, Object... values) {
         try (ResultSet rs = pstmt.executeQuery()) {
             if (rs.next()) {
                 // This is where the Session Management happens
-            session.a_id = rs.getInt("a_id");
-            session.username = rs.getString("name");
-            session.email = rs.getString("email");
-            session.type = rs.getString("type");
-            session.status = rs.getString("status");
+            // ✅ Store into Singleton session
+                session s = session.getInstance();
+                s.setA_id(rs.getInt("a_id"));
+                s.setUsername(rs.getString("name"));
+                s.setEmail(rs.getString("email"));
+                s.setType(rs.getString("type"));
+                s.setStatus(rs.getString("status"));
                 return rs.getString("type");
             }
         }
@@ -87,13 +89,19 @@ public String authenticate(String sql, Object... values) {
     }
     return null;
 }
-public void displayData(String sql, javax.swing.JTable table) {
+public void displayData(String sql, javax.swing.JTable table, Object... params) {
     try (Connection conn = connectDB();
-         PreparedStatement pstmt = conn.prepareStatement(sql);
-         ResultSet rs = pstmt.executeQuery()) {
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
         
-        // This line automatically maps the Resultset to your JTable
-        table.setModel(DbUtils.resultSetToTableModel(rs));
+        // Set params only if provided
+        if (params != null) {
+            for (int i = 0; i < params.length; i++) {
+                pstmt.setObject(i + 1, params[i]);
+            }
+        }
+        
+        ResultSet rs = pstmt.executeQuery();  // ← NOT in try-with-resources
+        table.setModel(DbUtils.resultSetToTableModel(rs)); // DbUtils needs rs open
         
     } catch (SQLException e) {
         System.out.println("Error displaying data: " + e.getMessage());

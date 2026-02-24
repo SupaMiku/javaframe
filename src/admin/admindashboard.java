@@ -99,6 +99,9 @@ public class admindashboard extends javax.swing.JFrame {
 
         bookspanel.setBackground(new java.awt.Color(0, 153, 0));
         bookspanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bookspanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 bookspanelMouseEntered(evt);
             }
@@ -250,6 +253,12 @@ public class admindashboard extends javax.swing.JFrame {
         us.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_accountpanelMouseClicked
+
+    private void bookspanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookspanelMouseClicked
+        books bok = new books();
+        bok.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_bookspanelMouseClicked
 
     /**
      * @param args the command line arguments

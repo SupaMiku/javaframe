@@ -22,11 +22,14 @@ public class userForm extends javax.swing.JFrame {
          loadUserProfile();
     }
     private void loadUserProfile() {
-        id.setText("" + session.a_id);
-    username.setText(session.username);
-    email.setText(session.email);
-    status.setText(session.status);
-    type.setText(session.type);
+        // ✅ Use Singleton session
+    session s = session.getInstance();
+    
+    id.setText(String.valueOf(s.getA_id()));
+    username.setText(s.getUsername());
+    email.setText(s.getEmail());
+    status.setText(s.getStatus());
+    type.setText(s.getType());
 
    
 }

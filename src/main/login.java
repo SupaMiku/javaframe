@@ -144,25 +144,26 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_emailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        conf c = new conf();
-String sql = "SELECT * FROM tbl_acc WHERE email = ? AND pass = ? AND status = ?";
-String accType = c.authenticate(sql, email.getText(), pass.getText(), "Active");
+         conf c = new conf();
+    String sql = "SELECT * FROM tbl_acc WHERE email = ? AND pass = ? AND status = ?";
+    String accType = c.authenticate(sql, email.getText(), pass.getText(), "Active");
 
-if (accType != null) {
-    JOptionPane.showMessageDialog(null, "Log in Success " + session.username + "!");
+    if (accType != null) {
+        // ✅ Use Singleton session
+        String name = session.getInstance().getUsername();
+        JOptionPane.showMessageDialog(null, "Log in Success " + name + "!");
 
-    if (accType.equals("ADMIN")) {
-        admindashboard ad = new admindashboard();
-        ad.setVisible(true);
+        if (accType.equals("ADMIN")) {
+            admindashboard ad = new admindashboard();
+            ad.setVisible(true);
+        } else {
+            userstable ud = new userstable();
+            ud.setVisible(true);
+        }
+        this.dispose();
     } else {
-        // Assuming you have a separate dashboard for regular users
-        userstable ud = new userstable(); 
-        ud.setVisible(true);
+        JOptionPane.showMessageDialog(null, "Invalid Credentials");
     }
-    this.dispose(); 
-} else {
-    JOptionPane.showMessageDialog(null, "Invalid Credentials");
-}
 
 
     }//GEN-LAST:event_jButton1ActionPerformed

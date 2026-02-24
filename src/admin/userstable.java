@@ -20,14 +20,73 @@ public class userstable extends javax.swing.JFrame {
      */
     public userstable() {
         initComponents();
+        
         displayUsers();
-        search.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
+        
+        searchColumn = new javax.swing.JComboBox<>(new String[]{
+    "a_id", "name", "email", "gender", "type", "status", "address"  // ← added a_id
+});
+    // jPanel1 starts at x=230, y=60 — so add 230+310=540 for x, 60+10=70 for y
+    searchColumn.setBounds(540, 70, 120, 40);
+    searchColumn.setBackground(new java.awt.Color(0, 153, 0));
+    searchColumn.setForeground(java.awt.Color.WHITE);
+    searchColumn.setFont(new java.awt.Font("Arial Black", 0, 10));
+    getContentPane().add(searchColumn);
+
+    // Also reposition searchfilter to make room
+    searchfilter.setBounds(670, 70, 130, 40);
+
+    search.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
             searchUser();
         }
     });
-     
+    searchfilter.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+    public void insertUpdate(javax.swing.event.DocumentEvent e) { }
+    
+    public void removeUpdate(javax.swing.event.DocumentEvent e) {
+        // When text is erased and field becomes empty → show all users
+        if (searchfilter.getText().trim().isEmpty()) {
+            displayUsers();
+        }
     }
+    
+    public void changedUpdate(javax.swing.event.DocumentEvent e) { }
+});
+        search.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+         
+        }
+    });
+        
+        }
+    private void searchUser() {
+    String keyword = searchfilter.getText().trim();
+
+    conf con = new conf();
+
+    if (keyword.isEmpty()) {
+        displayUsers();
+        return;
+    }
+
+    // ✅ Search ALL columns at once
+    String sql = "SELECT * FROM tbl_acc WHERE "
+        + "CAST(a_id AS TEXT) LIKE ? OR "
+        + "name LIKE ? OR "
+        + "email LIKE ? OR "
+        + "gender LIKE ? OR "
+        + "type LIKE ? OR "
+        + "status LIKE ? OR "
+        + "address LIKE ?";
+
+    String kw = "%" + keyword + "%";
+
+    // Pass the keyword once for each ? placeholder (7 columns = 7 params)
+    con.displayData(sql, usertable, kw, kw, kw, kw, kw, kw, kw);
+}
+    private javax.swing.JComboBox<String> searchColumn;
+    
     
     void displayUsers(){
         conf con = new conf();
@@ -66,7 +125,7 @@ public class userstable extends javax.swing.JFrame {
         search = new javax.swing.JButton();
         add = new javax.swing.JButton();
         edit = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        searchfilter = new javax.swing.JTextField();
         delete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         usertable = new javax.swing.JTable();
@@ -208,7 +267,7 @@ public class userstable extends javax.swing.JFrame {
             }
         });
         jPanel1.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 90, 40));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 200, 40));
+        jPanel1.add(searchfilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 200, 40));
 
         delete.setBackground(new java.awt.Color(0, 153, 0));
         delete.setText("DELETE");
@@ -252,8 +311,8 @@ public class userstable extends javax.swing.JFrame {
     }//GEN-LAST:event_dashpanelMouseExited
 
     private void userpanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpanelMouseClicked
-        admindashboard us = new admindashboard();
-        usertable.add(us).setVisible(true);
+        userstable us = new userstable();
+    us.setVisible(true);
     }//GEN-LAST:event_userpanelMouseClicked
 
     private void userpanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpanelMouseEntered
@@ -294,15 +353,14 @@ public class userstable extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteMouseClicked
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-        AddEditUser form = new AddEditUser();
+       AddEditUser form = new AddEditUser();
     form.setAddMode();
     form.setVisible(true);
-    
-    // Refresh table automatically when the add/edit form is closed
+
     form.addWindowListener(new java.awt.event.WindowAdapter() {
         @Override
         public void windowClosed(java.awt.event.WindowEvent e) {
-            displayUsers();
+            displayUsers(); // refresh table after add
         }
     });
     }//GEN-LAST:event_addActionPerformed
@@ -310,44 +368,45 @@ public class userstable extends javax.swing.JFrame {
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
      int row = usertable.getSelectedRow();
     if (row < 0) {
-        JOptionPane.showMessageDialog(this, "Please select a user to edit.", "No Selection", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this,
+            "Please select a user to edit.",
+            "No Selection", JOptionPane.WARNING_MESSAGE);
         return;
     }
 
     try {
-        int a_id = Integer.parseInt( usertable.getValueAt(row, 0).toString() );
+        // Column order from tbl_acc: a_id, name, email, gender, type, address ...
+        // Adjust column indices to match your actual SELECT * result
+        int    a_id = Integer.parseInt(safeGet(row, 0));
+String nam  = safeGet(row, 1);  // name
+String em   = safeGet(row, 2);  // email
+String gen  = safeGet(row, 4);  // gender  ← skip pass(3)
+String typ  = safeGet(row, 5);  // type
+String adr  = safeGet(row, 7);  // address ← skip status(6)
 
-        String uid = safeGet(row, 1);   // userid
-        String nam = safeGet(row, 2);   // name
-        String em  = safeGet(row, 3);   // email
-        String gen = safeGet(row, 4);   // gender
-        String typ = safeGet(row, 5);   // type
-        String adr = safeGet(row, 7);   // address (if exists)
-
-        AddEditUser form = new AddEditUser();
-        form.setEditMode(a_id, uid, nam, em, gen, typ, adr);
+AddEditUser form = new AddEditUser();
+form.setEditMode(a_id, adr, nam, em, gen, typ, adr);
         form.setVisible(true);
 
         form.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosed(java.awt.event.WindowEvent e) {
-                displayUsers();
+                displayUsers(); // refresh table after edit
             }
         });
+
     } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Error reading row: " + ex.getMessage(), "Edit Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this,
+            "Error loading user data: " + ex.getMessage(),
+            "Edit Error", JOptionPane.ERROR_MESSAGE);
         ex.printStackTrace();
     }
 }
 
-// Helper
+// Safe helper
 private String safeGet(int row, int col) {
-    try {
-        Object val = usertable.getValueAt(row, col);
-        return val != null ? val.toString() : "";
-    } catch (Exception e) {
-        return "";
-    }
+    Object val = usertable.getValueAt(row, col);
+    return val != null ? val.toString().trim() : "";
     }//GEN-LAST:event_editActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
@@ -430,24 +489,14 @@ private String safeGet(int row, int col) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel navbar;
     private javax.swing.JButton search;
+    private javax.swing.JTextField searchfilter;
     private javax.swing.JPanel transactionpanel;
     private javax.swing.JPanel userpanel;
     private javax.swing.JLabel userstable;
     private javax.swing.JTable usertable;
     // End of variables declaration//GEN-END:variables
 
-    private void editUser() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void deleteUser() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void searchUser() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 }
