@@ -120,6 +120,9 @@ public class admindashboard extends javax.swing.JFrame {
 
         transactionpanel.setBackground(new java.awt.Color(0, 153, 0));
         transactionpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                transactionpanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 transactionpanelMouseEntered(evt);
             }
@@ -259,6 +262,12 @@ public class admindashboard extends javax.swing.JFrame {
         bok.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_bookspanelMouseClicked
+
+    private void transactionpanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transactionpanelMouseClicked
+       transaction trans = new transaction();
+       trans.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_transactionpanelMouseClicked
 
     /**
      * @param args the command line arguments

@@ -23,8 +23,9 @@ public class transaction extends javax.swing.JFrame {
         displayTransactions();
         // Search column combo
     searchColumn = new javax.swing.JComboBox<>(new String[]{
-            "trans_id", "user_name", "book_title", "borrow_date", "return_date", "status"
-        });
+    "trans_id", "a_id", "user_name", "bok_id", "title",  // ✅ bok_id, title
+    "borrow_date", "return_date", "status"
+});
         searchColumn.setBackground(new java.awt.Color(0, 153, 0));
         searchColumn.setForeground(java.awt.Color.WHITE);
         searchColumn.setFont(new java.awt.Font("Arial Black", 0, 10));
@@ -43,33 +44,26 @@ public class transaction extends javax.swing.JFrame {
             });
     }
     private javax.swing.JComboBox<String> searchColumn;
-    Color navcolor = new Color(0, 153, 0);
-    Color bodycolor = new Color(0, 255, 0);
-
+   
     void displayTransactions() {
-        conf con = new conf();
-        con.displayData("SELECT * FROM tbl_transaction", transtable);
-    }
+    conf con = new conf();
+    con.displayData("SELECT * FROM tbl_transaction", usertable); // ✅ usertable not transtable
+}
     private void searchTransactions() {
-        String keyword = searchfilter.getText().trim();
-        String column  = searchColumn.getSelectedItem().toString();
-        conf con = new conf();
+    String keyword = searchfilter.getText().trim();
+    String column  = searchColumn.getSelectedItem().toString();
+    conf con = new conf();
 
-        if (keyword.isEmpty()) { displayTransactions(); return; }
+    if (keyword.isEmpty()) { displayTransactions(); return; }
 
-        String sql;
-        if (column.equals("trans_id")) {
-            sql = "SELECT * FROM tbl_transaction WHERE CAST(trans_id AS TEXT) LIKE ?";
-        } else {
-            sql = "SELECT * FROM tbl_transaction WHERE " + column + " LIKE ?";
-        }
-        con.displayData(sql, transtable, "%" + keyword + "%");
+    String sql;
+    if (column.equals("trans_id")) {
+        sql = "SELECT * FROM tbl_transaction WHERE CAST(trans_id AS TEXT) LIKE ?";
+    } else {
+        sql = "SELECT * FROM tbl_transaction WHERE " + column + " LIKE ?";
     }
-
-    private String safeGet(int row, int col) {
-        Object val = transtable.getValueAt(row, col);
-        return val != null ? val.toString().trim() : "";
-    }
+    con.displayData(sql, usertable, "%" + keyword + "%"); // ✅ usertable
+}
 
      Color navcolor = new Color (0,153,0);
     Color headercolor = new Color (0,204,0);
@@ -101,6 +95,8 @@ public class transaction extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         transactionpanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        account = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -213,6 +209,9 @@ public class transaction extends javax.swing.JFrame {
 
         bookspanel.setBackground(new java.awt.Color(0, 153, 0));
         bookspanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bookspanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 bookspanelMouseEntered(evt);
             }
@@ -247,6 +246,27 @@ public class transaction extends javax.swing.JFrame {
 
         navbar.add(transactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 230, 50));
 
+        account.setBackground(new java.awt.Color(0, 153, 0));
+        account.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                accountMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                accountMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                accountMouseExited(evt);
+            }
+        });
+        account.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("ACCOUNT");
+        account.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 230, 40));
+
+        navbar.add(account, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 230, 60));
+
         getContentPane().add(navbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 420));
 
         pack();
@@ -257,15 +277,15 @@ public class transaction extends javax.swing.JFrame {
     }//GEN-LAST:event_addMouseClicked
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-       aaddeditransaction form = new addeditransaction();
-        form.setAddMode();
-        form.setVisible(true);
-        form.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosed(java.awt.event.WindowEvent e) {
-                displayTransactions();
-            }
-        });
+       addedittransac form = new addedittransac(); // ✅ correct class name
+    form.setAddMode();
+    form.setVisible(true);
+    form.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent e) {
+            displayTransactions();
+        }
+    });
     }//GEN-LAST:event_addActionPerformed
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
@@ -273,40 +293,39 @@ public class transaction extends javax.swing.JFrame {
     }//GEN-LAST:event_editMouseClicked
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-       int row = transtable.getSelectedRow();
-        if (row < 0) {
-            JOptionPane.showMessageDialog(this, "Please select a transaction to edit.",
-                "No Selection", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        try {
-            int    trans_id    = Integer.parseInt(safeGet(row, 0));
-            String user_id     = safeGet(row, 1);
-            String user_name   = safeGet(row, 2);
-            String book_id     = safeGet(row, 3);
-            String book_title  = safeGet(row, 4);
-            String borrow_date = safeGet(row, 5);
-            String return_date = safeGet(row, 6);
-            String status      = safeGet(row, 7);
+       int row = usertable.getSelectedRow(); // ✅ usertable
+    if (row < 0) {
+        JOptionPane.showMessageDialog(this, "Please select a transaction to edit.",
+            "No Selection", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    try {
+        int    trans_id    = Integer.parseInt(safeGet(row, 0));  // trans_id
+String a_id        = safeGet(row, 1);                    // a_id
+String user_name   = safeGet(row, 2);                    // user_name
+String bok_id      = safeGet(row, 3);                    // bok_id
+String title       = safeGet(row, 4);                    // title
+String borrow_date = safeGet(row, 5);                    // borrow_date
+String return_date = safeGet(row, 6);                    // return_date
+String status      = safeGet(row, 7);                    // status
 
-            addeditransaction form = new addeditransaction();
-            form.setEditMode(trans_id, user_id, user_name,
-                             book_id, book_title, borrow_date, return_date, status);
-            form.setVisible(true);
-            form.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosed(java.awt.event.WindowEvent e) {
-                    displayTransactions();
-                }
-            });
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
-                "Edit Error", JOptionPane.ERROR_MESSAGE);
-        }
+addedittransac form = new addedittransac();
+form.setEditMode(trans_id, a_id, user_name, bok_id, title, borrow_date, return_date, status);
+        form.setVisible(true);
+        form.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                displayTransactions();
+            }
+        });
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
+            "Edit Error", JOptionPane.ERROR_MESSAGE);
+    }
         }
 
         // Safe helper
-        private String safeGet(int row, int col) {
+      private String safeGet(int row, int col) {
             Object val = usertable.getValueAt(row, col);
     return val != null ? val.toString().trim() : "";
     }//GEN-LAST:event_editActionPerformed
@@ -316,33 +335,33 @@ public class transaction extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteMouseClicked
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-        int row = transtable.getSelectedRow();
-        if (row < 0) {
-            JOptionPane.showMessageDialog(this, "Please select a transaction to delete.",
-                "No Selection", JOptionPane.WARNING_MESSAGE);
-            return;
+       int row = usertable.getSelectedRow(); // ✅ usertable
+    if (row < 0) {
+        JOptionPane.showMessageDialog(this, "Please select a transaction to delete.",
+            "No Selection", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    int trans_id = Integer.parseInt(safeGet(row, 0));
+    String borrower = safeGet(row, 2);
+
+    int choice = JOptionPane.showConfirmDialog(this,
+        "Delete transaction for: " + borrower + " ?",
+        "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+    if (choice == JOptionPane.YES_OPTION) {
+        conf con = new conf();
+        boolean ok = con.executeUpdate(
+            "DELETE FROM tbl_transaction WHERE trans_id = ?", trans_id);
+        if (ok) {
+            JOptionPane.showMessageDialog(this, "Transaction deleted.", "Success",
+                JOptionPane.INFORMATION_MESSAGE);
+            displayTransactions();
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to delete.", "Error",
+                JOptionPane.ERROR_MESSAGE);
         }
-
-        int trans_id = Integer.parseInt(safeGet(row, 0));
-        String borrower = safeGet(row, 2);
-
-        int choice = JOptionPane.showConfirmDialog(this,
-            "Delete transaction for: " + borrower + " ?",
-            "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-
-        if (choice == JOptionPane.YES_OPTION) {
-            conf con = new conf();
-            boolean ok = con.executeUpdate(
-                "DELETE FROM tbl_transaction WHERE trans_id = ?", trans_id);
-            if (ok) {
-                JOptionPane.showMessageDialog(this, "Transaction deleted.", "Success",
-                    JOptionPane.INFORMATION_MESSAGE);
-                displayTransactions();
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to delete.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            }
-        }
+    }
     
     }//GEN-LAST:event_deleteActionPerformed
 
@@ -383,6 +402,26 @@ public class transaction extends javax.swing.JFrame {
         transactionpanel.setBackground(navcolor);
     }//GEN-LAST:event_transactionpanelMouseExited
 
+    private void bookspanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookspanelMouseClicked
+       books boks = new books();
+       boks.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_bookspanelMouseClicked
+
+    private void accountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountMouseClicked
+        userForm user = new userForm();
+        user.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_accountMouseClicked
+
+    private void accountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountMouseEntered
+        account.setBackground(bodycolor);
+    }//GEN-LAST:event_accountMouseEntered
+
+    private void accountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountMouseExited
+        account.setBackground(navcolor);
+    }//GEN-LAST:event_accountMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -422,12 +461,14 @@ public class transaction extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel account;
     private javax.swing.JButton add;
     private javax.swing.JPanel bookspanel;
     private javax.swing.JPanel dashpanel;
     private javax.swing.JButton delete;
     private javax.swing.JButton edit;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;

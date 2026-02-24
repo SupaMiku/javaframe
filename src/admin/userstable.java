@@ -119,6 +119,8 @@ public class userstable extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         transactionpanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        account = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         headeruser = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -218,6 +220,27 @@ public class userstable extends javax.swing.JFrame {
         transactionpanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
         navbar.add(transactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 230, 50));
+
+        account.setBackground(new java.awt.Color(0, 153, 0));
+        account.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                accountMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                accountMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                accountMouseExited(evt);
+            }
+        });
+        account.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("ACCOUNT");
+        account.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 230, 40));
+
+        navbar.add(account, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 230, 60));
 
         getContentPane().add(navbar);
         navbar.setBounds(0, 0, 230, 480);
@@ -439,6 +462,20 @@ private String safeGet(int row, int col) {
     }
     }//GEN-LAST:event_deleteActionPerformed
 
+    private void accountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountMouseClicked
+        userForm user = new userForm();
+        user.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_accountMouseClicked
+
+    private void accountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountMouseEntered
+        account.setBackground(bodycolor);
+    }//GEN-LAST:event_accountMouseEntered
+
+    private void accountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountMouseExited
+        account.setBackground(navcolor);
+    }//GEN-LAST:event_accountMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -475,6 +512,7 @@ private String safeGet(int row, int col) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel account;
     private javax.swing.JButton add;
     private javax.swing.JPanel bookspanel;
     private javax.swing.JPanel dashpanel;
@@ -483,6 +521,7 @@ private String safeGet(int row, int col) {
     private javax.swing.JPanel header;
     private javax.swing.JPanel headeruser;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
