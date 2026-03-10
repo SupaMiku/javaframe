@@ -26,6 +26,13 @@ public class addedittransac extends javax.swing.JFrame {
     borrowdate.setText(java.time.LocalDate.now()
         .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 }
+    // ✅ Add this method in addedittransac.java
+public void prefillUser(int a_id, String name) {
+    userid.setText(String.valueOf(a_id));
+    userid.setEditable(false);   // lock — can't change their ID
+    username.setText(name);
+    username.setEditable(false); // lock — can't change their name
+}
     
 
     
@@ -239,15 +246,13 @@ public void setEditMode(int tid, String uid, String uname,
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 86, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();

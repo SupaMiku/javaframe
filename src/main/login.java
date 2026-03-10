@@ -6,6 +6,7 @@
 package main;
 
 import admin.admindashboard;
+import admin.userdashboard;
 import admin.userstable;
 import config.conf;
 import config.session;
@@ -145,24 +146,24 @@ public class login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
          conf c = new conf();
-    String sql = "SELECT * FROM tbl_acc WHERE email = ? AND pass = ? AND status = ?";
-    String accType = c.authenticate(sql, email.getText(), pass.getText(), "Active");
+    String sql = "SELECT * FROM tbl_acc WHERE email = ? AND pass = ? AND status = 'Active'";
+    String accType = c.authenticate(sql, email.getText(), pass.getText());
 
     if (accType != null) {
-        // ✅ Use Singleton session
         String name = session.getInstance().getUsername();
-        JOptionPane.showMessageDialog(null, "Log in Success " + name + "!");
+        JOptionPane.showMessageDialog(null, "Welcome " + name + "!");
 
         if (accType.equals("ADMIN")) {
             admindashboard ad = new admindashboard();
             ad.setVisible(true);
-        } else {
-            userstable ud = new userstable();
+        } else if (accType.equals("USER")) {
+            // ✅ USER opens same dashboard but buttons will auto-hide
+            userdashboard ud = new userdashboard();
             ud.setVisible(true);
         }
         this.dispose();
     } else {
-        JOptionPane.showMessageDialog(null, "Invalid Credentials");
+        JOptionPane.showMessageDialog(null, "Invalid Credentials or Account Inactive.");
     }
 
 

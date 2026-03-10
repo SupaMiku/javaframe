@@ -21,6 +21,12 @@ public class books extends javax.swing.JFrame {
     public books() {
         initComponents();
         displayBooks();
+        String userType = config.session.getInstance().getType();
+if (userType.equals("USER")) {
+    add.setVisible(false);
+    edit.setVisible(false);
+    delete.setVisible(false);
+}
         // Search column combo
     searchColumn = new javax.swing.JComboBox<>(new String[]{
         "bok_id", "title", "author", "genre", "quantity", "status"

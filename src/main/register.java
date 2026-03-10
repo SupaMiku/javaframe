@@ -159,9 +159,7 @@ public class register extends javax.swing.JFrame {
     }//GEN-LAST:event_emailActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-conf conf = new conf();
-String sql = "INSERT INTO tbl_acc(name, email, pass, type, status) VALUES (?, ?, ?, ?, ?)";
-            conf.addRecord(sql, fullname.getText(), email.getText(), pass.getText(),"ADMIN" ,"PENDING");
+
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
@@ -177,33 +175,33 @@ String sql = "INSERT INTO tbl_acc(name, email, pass, type, status) VALUES (?, ?,
     }//GEN-LAST:event_jButton3MouseEntered
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-    conf conf = new conf();
-
-    String sql = "INSERT INTO tbl_acc(name, email, pass, type, status) VALUES (?, ?, ?, ?, ?)";
+conf con = new conf();
     String password = new String(pass.getPassword());
 
-    if (fullname.getText().isEmpty() || email.getText().isEmpty() || password.isEmpty()) {
+    // Validation
+    if (fullname.getText().trim().isEmpty() || 
+        email.getText().trim().isEmpty() || 
+        password.isEmpty()) {
         JOptionPane.showMessageDialog(this, "All fields are required!");
         return;
     }
 
-    conf.addRecord(
+    String sql = "INSERT INTO tbl_acc(name, email, pass, type, status) VALUES (?, ?, ?, ?, ?)";
+
+    con.addRecord(
         sql,
-        fullname.getText(),
-        email.getText(),
+        fullname.getText().trim(),
+        email.getText().trim(),
         password,
-        "ADMIN",
-        "PENDING"
+        "USER",    // ✅ always USER — never ADMIN
+        "Active"   // ✅ Active so they can login immediately
     );
 
-    JOptionPane.showMessageDialog(this, "Registration successful!");
+    JOptionPane.showMessageDialog(this, "Registration successful! Please login.");
 
-    // NAVIGATION
     login login = new login();
     login.setVisible(true);
     this.dispose();
-
    
          
     }//GEN-LAST:event_jButton2ActionPerformed

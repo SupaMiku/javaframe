@@ -168,7 +168,7 @@ public class admindashboard extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("ADMIN DASHBOARB");
+        jLabel5.setText("ADMIN DASHBOARD");
         header.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 17, 620, 30));
 
         jPanel2.add(header);

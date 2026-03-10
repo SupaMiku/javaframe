@@ -44,11 +44,34 @@ public class transaction extends javax.swing.JFrame {
             });
     }
     private javax.swing.JComboBox<String> searchColumn;
+    
    
     void displayTransactions() {
-    conf con = new conf();
-    con.displayData("SELECT * FROM tbl_transaction", usertable); // ✅ usertable not transtable
+     String userType = config.session.getInstance().getType();
+    
+    if (userType.equals("USER")) {
+        // ✅ Hide CRUD buttons for USER
+        add.setVisible(false);
+        edit.setVisible(false);
+        delete.setVisible(false);
+        displayMyTransactions();
+        return;
+    }
+    
+    // ✅ ADMIN sees everything
+    config.conf con = new config.conf();
+    con.displayData("SELECT * FROM tbl_transaction", usertable);
 }
+
+void displayMyTransactions() {
+    config.conf con = new config.conf();
+    int a_id = config.session.getInstance().getA_id();
+    con.displayData(
+        "SELECT trans_id, title, borrow_date, return_date, status "
+        + "FROM tbl_transaction WHERE a_id = ?",
+        usertable, a_id);
+}
+
     private void searchTransactions() {
     String keyword = searchfilter.getText().trim();
     String column  = searchColumn.getSelectedItem().toString();
@@ -64,6 +87,7 @@ public class transaction extends javax.swing.JFrame {
     }
     con.displayData(sql, usertable, "%" + keyword + "%"); // ✅ usertable
 }
+    
 
      Color navcolor = new Color (0,153,0);
     Color headercolor = new Color (0,204,0);
