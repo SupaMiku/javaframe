@@ -19,12 +19,80 @@ public class addedittransac extends javax.swing.JFrame {
   private boolean isEditMode = false;
     private int edit_trans_id = -1;
     
+    private void lookupBook() {
+     String bidVal = bookid.getText().trim();
+    if (bidVal.isEmpty()) {
+        title.setText("");
+        return;
+    }
+
+    try {
+        config.conf con = new config.conf();
+        // ✅ Use getConnection() to query directly instead of displayData()
+        java.sql.Connection connection = conf.connectDB();
+        java.sql.PreparedStatement ps = connection.prepareStatement(
+            "SELECT title, status FROM tbl_books WHERE bok_id = ?");
+        ps.setInt(1, Integer.parseInt(bidVal));
+        java.sql.ResultSet rs = ps.executeQuery();
+
+        if (!rs.next()) {
+            title.setText("");
+            JOptionPane.showMessageDialog(this,
+                "Book ID does not exist.",
+                "Invalid Book", JOptionPane.WARNING_MESSAGE);
+            bookid.setText("");
+            bookid.requestFocus();
+            return;
+        }
+
+        String bookStatus = rs.getString("status").trim();
+        if (bookStatus.equalsIgnoreCase("Out of Stock")) {
+            title.setText("");
+            JOptionPane.showMessageDialog(this,
+                "This book is currently Out of Stock.",
+                "Unavailable", JOptionPane.WARNING_MESSAGE);
+            bookid.setText("");
+            bookid.requestFocus();
+            return;
+        }
+
+        // ✅ Valid — auto-fill and lock title
+        title.setText(rs.getString("title").trim());
+        title.setEditable(false);
+        title.setBackground(new java.awt.Color(200, 200, 200));
+
+        rs.close();
+        ps.close();
+        connection.close();
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this,
+            "Book ID must be a number.",
+            "Invalid Input", JOptionPane.WARNING_MESSAGE);
+        bookid.setText("");
+        bookid.requestFocus();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+            "Database error: " + e.getMessage(),
+            "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+    
     public addedittransac() {
-    initComponents();
+    initComponents();   
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); // ✅ fix from before
     setTitle("Add Transaction");
     booklabel.setText("SAVE");
     borrowdate.setText(java.time.LocalDate.now()
         .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+    // ✅ Lookup book when user tabs out of bookid field
+    bookid.addFocusListener(new java.awt.event.FocusAdapter() {
+        @Override
+        public void focusLost(java.awt.event.FocusEvent e) {
+            if (!isEditMode) lookupBook(); // only validate on ADD, not EDIT
+        }
+    });
 }
     // ✅ Add this method in addedittransac.java
 public void prefillUser(int a_id, String name) {
@@ -49,6 +117,10 @@ public void setAddMode() {
     bookid1.setBackground(new java.awt.Color(200, 200, 200));
     borrowdate.setText(java.time.LocalDate.now()
         .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+    
+     title.setEditable(false);
+    title.setBackground(new java.awt.Color(200, 200, 200));
+    title.setText("(auto from Book ID)");
 }
 
 public void setEditMode(int tid, String uid, String uname,
@@ -70,6 +142,15 @@ public void setEditMode(int tid, String uid, String uname,
     borrowdate1.setText(rdate);   // return_date
 
     jComboBox1.setSelectedItem(stat != null ? stat.trim() : "Borrowed");
+    
+     // ✅ Lock user fields if logged in as USER
+    String userType = config.session.getInstance().getType();
+    if (userType.equals("USER")) {
+        userid.setEditable(false);
+        userid.setBackground(new java.awt.Color(200, 200, 200));
+        username.setEditable(false);
+        username.setBackground(new java.awt.Color(200, 200, 200));
+    }
 
     setTitle("Edit Transaction – ID: " + tid);
     booklabel.setText("UPDATE");    
@@ -80,7 +161,9 @@ public void setEditMode(int tid, String uid, String uname,
     userid.setText("");       // user_id
     username.setText("");     // user_name
     bookid.setText("");       // book_id
-    title.setText("");        // book_title
+    title.setText("");   // book_title
+    title.setEditable(false);           
+    title.setBackground(new java.awt.Color(200, 200, 200));  
     borrowdate.setText("");   // borrow_date
     borrowdate1.setText("");  // return_date
     jComboBox1.setSelectedIndex(0);

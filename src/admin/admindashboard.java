@@ -238,7 +238,7 @@ public class admindashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_transactionpanelMouseExited
 
     private void userpanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpanelMouseClicked
-        userstable us = new userstable();
+        adminuserstable us = new adminuserstable();
         us.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_userpanelMouseClicked

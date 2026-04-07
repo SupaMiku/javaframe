@@ -48,22 +48,23 @@ public class usertransaction extends javax.swing.JFrame {
    
     void displayTransactions() {
        String userType = config.session.getInstance().getType();
-    
-    if (userType.equals("USER")) {
-        // ✅ USER can ADD (borrow) but cannot edit or delete
-        add.setVisible(true);    // ✅ keep — user can borrow
-        edit.setVisible(false);  // ❌ hide — user cannot edit
-        delete.setVisible(false);// ❌ hide — user cannot delete
-        displayMyTransactions();
-        return;
-    }
-    
-    // ✅ ADMIN sees everything with all buttons
+
     add.setVisible(true);
     edit.setVisible(true);
     delete.setVisible(true);
+
     config.conf con = new config.conf();
-    con.displayData("SELECT * FROM tbl_transaction", usertable);
+
+    if (userType.equals("USER")) {
+        int a_id = config.session.getInstance().getA_id();
+        con.displayData(
+            "SELECT trans_id, a_id, user_name, bok_id, title, " +
+            "borrow_date, return_date, status " +
+            "FROM tbl_transaction WHERE a_id = ?",
+            usertable, a_id);
+    } else {
+        con.displayData("SELECT * FROM tbl_transaction", usertable);
+    }
 }
 
 void displayMyTransactions() {
@@ -333,13 +334,6 @@ void displayMyTransactions() {
     }//GEN-LAST:event_editMouseClicked
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-        // ✅ USER cannot edit — double safety check
-    String userType = config.session.getInstance().getType();
-    if (userType.equals("USER")) {
-        JOptionPane.showMessageDialog(this, "You do not have permission to edit.",
-            "Access Denied", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
 
     int row = usertable.getSelectedRow();
     if (row < 0) {
@@ -383,13 +377,6 @@ void displayMyTransactions() {
     }//GEN-LAST:event_deleteMouseClicked
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-       // ✅ USER cannot delete — safety check
-    String userType = config.session.getInstance().getType();
-    if (userType.equals("USER")) {
-        JOptionPane.showMessageDialog(this, "You do not have permission to delete.",
-            "Access Denied", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
 
     int row = usertable.getSelectedRow();
     if (row < 0) {

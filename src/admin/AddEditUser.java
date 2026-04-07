@@ -14,6 +14,9 @@ import javax.swing.JOptionPane;
  * @author Administrator
  */
 public class AddEditUser extends javax.swing.JFrame {
+   
+    private String selectedImagePath = null;
+private javax.swing.ImageIcon currentImage = null;
 
     private String selectedGender;
     private boolean isEditMode = false;
@@ -34,7 +37,7 @@ public void setAddMode() {
 }
 
 public void setEditMode(int a_id, String uid, String nam, String em, 
-                        String gen, String typ, String adr) {
+                        String gen, String typ, String adr, String imgPath) {
  isEditMode = true;
     edit_a_id = a_id;
 
@@ -72,6 +75,9 @@ userid.setEditable(false);
 userid.setBackground(new java.awt.Color(200, 200, 200)); // grey = not editable
 userid.setVisible(true);
 jLabel4.setVisible(true);
+
+ selectedImagePath = imgPath;
+    displayImage(imgPath);
 }
 
 private void clearAllFields() {
@@ -84,19 +90,65 @@ private void clearAllFields() {
         jComboBox1.setSelectedIndex(0);
         jTextArea1.setText("");
         id.setText("");
+        selectedImagePath = null;          // ✅
+    jLabel3.setIcon(null);             // ✅
+    jLabel3.setText("Click to upload"); // ✅
 }
     /**
      * Creates new form AddEditUser
      */
     public AddEditUser() {
         initComponents();
-        setTitle("Add New User");
-user_label.setText("SAVE");
-        ButtonGroup bg = new ButtonGroup();
+       setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); // ✅ fix
+    setTitle("Add New User");
+    user_label.setText("SAVE");
+    ButtonGroup bg = new ButtonGroup();
     bg.add(male);
     bg.add(female);
+
+    // ✅ Make image panel clickable
+    profile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    profile.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.DARK_GRAY));
+    profile.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            chooseProfileImage();
+        }
+    });
+
+    // ✅ Style the image label
+    jLabel3.setText("Click to upload");
+    jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    jLabel3.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
     }
-    
+    private void chooseProfileImage() {
+    javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
+    chooser.setDialogTitle("Select Profile Picture");
+    chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+        "Image Files (jpg, png, gif)", "jpg", "jpeg", "png", "gif"));
+
+    int result = chooser.showOpenDialog(this);
+    if (result == javax.swing.JFileChooser.APPROVE_OPTION) {
+        java.io.File file = chooser.getSelectedFile();
+        selectedImagePath = file.getAbsolutePath();
+        displayImage(selectedImagePath);
+    }
+}
+    private void displayImage(String path) {
+    if (path == null || path.isEmpty()) {
+        jLabel3.setIcon(null);
+        jLabel3.setText("Click to upload");
+        return;
+    }
+    try {
+        java.awt.Image img = new javax.swing.ImageIcon(path).getImage()
+            .getScaledInstance(150, 108, java.awt.Image.SCALE_SMOOTH);
+        jLabel3.setIcon(new javax.swing.ImageIcon(img));
+        jLabel3.setText("");
+    } catch (Exception e) {
+        jLabel3.setIcon(null);
+        jLabel3.setText("Invalid image");
+    }
+}
     
 
     /**
@@ -123,7 +175,7 @@ user_label.setText("SAVE");
         address = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jPanel3 = new javax.swing.JPanel();
+        profile = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         userlabel = new javax.swing.JPanel();
         user_label = new javax.swing.JLabel();
@@ -202,13 +254,18 @@ user_label.setText("SAVE");
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 170, 80));
 
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        profile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                profileMouseClicked(evt);
+            }
+        });
+        profile.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("IMAGE");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 150, 108));
+        profile.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 150, 108));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, 170, 130));
+        jPanel1.add(profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, 170, 130));
 
         userlabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -291,6 +348,7 @@ user_label.setText("SAVE");
         String typeVal    = jComboBox1.getSelectedItem().toString();
         String addressVal = jTextArea1.getText().trim();
         String statusVal  = "Active";
+         String imgVal     = selectedImagePath != null ? selectedImagePath : ""; // ✅
 
         if (isEditMode) {
             // UPDATE — do NOT touch a_id
@@ -328,6 +386,10 @@ user_label.setText("SAVE");
     private void femaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_femaleActionPerformed
         selectedGender = "Female";
     }//GEN-LAST:event_femaleActionPerformed
+
+    private void profileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_profileMouseClicked
 
     /**
      * @param args the command line arguments
@@ -378,10 +440,10 @@ user_label.setText("SAVE");
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     public javax.swing.JRadioButton male;
+    private javax.swing.JPanel profile;
     private javax.swing.JLabel status;
     private javax.swing.JLabel user_label;
     private javax.swing.JTextField userid;
