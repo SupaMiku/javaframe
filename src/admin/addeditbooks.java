@@ -102,11 +102,6 @@ private void clearAllFields() {
         genre = new javax.swing.JTextField();
         status = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        address = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         book_label = new javax.swing.JPanel();
         booklabel = new javax.swing.JLabel();
         id = new javax.swing.JLabel();
@@ -118,7 +113,7 @@ private void clearAllFields() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 255, 0));
+        jPanel1.setBackground(new java.awt.Color(51, 255, 51));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -135,7 +130,7 @@ private void clearAllFields() {
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         jLabel2.setText("Genre:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 60, 30));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 60, 30));
 
         jLabel4.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         jLabel4.setText("BOOK ID:");
@@ -146,22 +141,22 @@ private void clearAllFields() {
                 authorActionPerformed(evt);
             }
         });
-        jPanel1.add(author, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 130, 30));
+        jPanel1.add(author, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 130, 30));
 
         jLabel5.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         jLabel5.setText("Title:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 70, 30));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 70, 30));
 
         genre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 genreActionPerformed(evt);
             }
         });
-        jPanel1.add(genre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 130, 30));
+        jPanel1.add(genre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 130, 30));
 
         status.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         status.setText("Status:");
-        jPanel1.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 60, 30));
+        jPanel1.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 60, 30));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Available", "Out of Stock" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -169,25 +164,7 @@ private void clearAllFields() {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, 130, 30));
-
-        address.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
-        address.setText("Address:");
-        jPanel1.add(address, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 60, 30));
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 170, 80));
-
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("IMAGE");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 150, 108));
-
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 170, 130));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, 130, 30));
 
         book_label.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -199,21 +176,21 @@ private void clearAllFields() {
         booklabel.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         booklabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         booklabel.setText("LABEL");
-        book_label.add(booklabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 130, -1));
+        book_label.add(booklabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 130, -1));
 
-        jPanel1.add(book_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, 130, 40));
+        jPanel1.add(book_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 130, 40));
         jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 130, 30));
 
         jLabel6.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         jLabel6.setText("Quantity:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 60, 30));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 60, 30));
 
         quantity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quantityActionPerformed(evt);
             }
         });
-        jPanel1.add(quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 130, 30));
+        jPanel1.add(quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 130, 30));
 
         bookid1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         bookid1.addActionListener(new java.awt.event.ActionListener() {
@@ -222,11 +199,11 @@ private void clearAllFields() {
             }
         });
         jPanel1.add(bookid1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 130, 30));
-        jPanel1.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 130, 30));
+        jPanel1.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, 130, 30));
 
         jLabel7.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         jLabel7.setText("Author:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 70, 30));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, 70, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -236,7 +213,9 @@ private void clearAllFields() {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 132, Short.MAX_VALUE))
         );
 
         pack();
@@ -351,7 +330,6 @@ private void clearAllFields() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel address;
     private javax.swing.JTextField author;
     private javax.swing.JPanel book_label;
     private javax.swing.JTextField bookid1;
@@ -361,16 +339,12 @@ private void clearAllFields() {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField quantity;
     private javax.swing.JLabel status;
     private javax.swing.JTextField title;

@@ -110,11 +110,12 @@ if (userType.equals("USER")) {
         jLabel6 = new javax.swing.JLabel();
         account = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 255, 0));
+        jPanel1.setBackground(new java.awt.Color(51, 255, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         search.setBackground(new java.awt.Color(0, 153, 0));
@@ -197,7 +198,7 @@ if (userType.equals("USER")) {
         jLabel1.setText("DASHBOARD");
         dashpanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(dashpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 230, 50));
+        navbar.add(dashpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 230, 50));
 
         bookspanel.setBackground(new java.awt.Color(0, 153, 0));
         bookspanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -215,7 +216,7 @@ if (userType.equals("USER")) {
         jLabel3.setText("BOOKS");
         bookspanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(bookspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 230, 50));
+        navbar.add(bookspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 230, 50));
 
         transactionpanel.setBackground(new java.awt.Color(0, 153, 0));
         transactionpanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -236,7 +237,7 @@ if (userType.equals("USER")) {
         jLabel4.setText("BORROW TRANSACTION");
         transactionpanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(transactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 230, 50));
+        navbar.add(transactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 230, 50));
 
         accountpanel.setBackground(new java.awt.Color(0, 153, 0));
         accountpanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -279,6 +280,10 @@ if (userType.equals("USER")) {
         account.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 230, 40));
 
         navbar.add(account, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 230, 60));
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-library-building-100 (1).png"))); // NOI18N
+        navbar.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 180, 110));
 
         getContentPane().add(navbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 420));
 
@@ -480,6 +485,7 @@ if (userType.equals("USER")) {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

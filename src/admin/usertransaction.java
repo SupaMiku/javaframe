@@ -141,6 +141,7 @@ void displayMyTransactions() {
         jLabel4 = new javax.swing.JLabel();
         account = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -210,9 +211,9 @@ void displayMyTransactions() {
         ));
         jScrollPane1.setViewportView(usertable);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 600, 350));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 600, 320));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 620, 420));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 620, 390));
 
         navbar.setBackground(new java.awt.Color(0, 153, 0));
         navbar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -275,7 +276,7 @@ void displayMyTransactions() {
         jLabel4.setText("BORROW TRANSACTION");
         transactionpanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(transactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 230, 50));
+        navbar.add(transactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 230, 50));
 
         account.setBackground(new java.awt.Color(0, 153, 0));
         account.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -296,9 +297,13 @@ void displayMyTransactions() {
         jLabel2.setText("ACCOUNT");
         account.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 230, 40));
 
-        navbar.add(account, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 230, 60));
+        navbar.add(account, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 230, 60));
 
-        getContentPane().add(navbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 420));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-library-building-100 (1).png"))); // NOI18N
+        navbar.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 190, 100));
+
+        getContentPane().add(navbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 390));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -521,6 +526,7 @@ void displayMyTransactions() {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel navbar;

@@ -121,6 +121,7 @@ public class adminuserstable extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         account = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         headeruser = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -180,7 +181,7 @@ public class adminuserstable extends javax.swing.JFrame {
 
         userstable.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         userstable.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        userstable.setText("USER");
+        userstable.setText("USERS");
         userpanel.add(userstable, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
         navbar.add(userpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 230, 50));
@@ -204,7 +205,7 @@ public class adminuserstable extends javax.swing.JFrame {
         jLabel3.setText("BOOKS");
         bookspanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(bookspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 230, 50));
+        navbar.add(bookspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 230, 50));
 
         transactionpanel.setBackground(new java.awt.Color(0, 153, 0));
         transactionpanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -225,7 +226,7 @@ public class adminuserstable extends javax.swing.JFrame {
         jLabel4.setText("BORROW TRANSACTION");
         transactionpanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(transactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 230, 50));
+        navbar.add(transactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 230, 50));
 
         account.setBackground(new java.awt.Color(0, 153, 0));
         account.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -248,8 +249,12 @@ public class adminuserstable extends javax.swing.JFrame {
 
         navbar.add(account, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 230, 60));
 
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-library-building-100 (1).png"))); // NOI18N
+        navbar.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 190, 140));
+
         getContentPane().add(navbar);
-        navbar.setBounds(0, 0, 230, 480);
+        navbar.setBounds(0, 0, 230, 440);
 
         headeruser.setBackground(new java.awt.Color(0, 204, 0));
         headeruser.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -262,7 +267,7 @@ public class adminuserstable extends javax.swing.JFrame {
         getContentPane().add(headeruser);
         headeruser.setBounds(230, 0, 620, 60);
 
-        jPanel1.setBackground(new java.awt.Color(0, 255, 0));
+        jPanel1.setBackground(new java.awt.Color(51, 255, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         search.setBackground(new java.awt.Color(0, 153, 0));
@@ -322,10 +327,10 @@ public class adminuserstable extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(usertable);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 600, 350));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 600, 300));
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(230, 60, 620, 420);
+        jPanel1.setBounds(230, 60, 620, 380);
 
         pack();
         setLocationRelativeTo(null);
@@ -545,6 +550,7 @@ private String safeGet(int row, int col) {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel navbar;

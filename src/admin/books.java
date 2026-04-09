@@ -112,11 +112,12 @@ if (userType.equals("USER")) {
         jLabel6 = new javax.swing.JLabel();
         account = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 255, 0));
+        jPanel1.setBackground(new java.awt.Color(51, 255, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         search.setBackground(new java.awt.Color(0, 153, 0));
@@ -302,6 +303,10 @@ if (userType.equals("USER")) {
         account.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 230, 40));
 
         navbar.add(account, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 230, 60));
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-library-building-100 (1).png"))); // NOI18N
+        navbar.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 190, 140));
 
         getContentPane().add(navbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 420));
 
@@ -515,6 +520,7 @@ if (userType.equals("USER")) {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

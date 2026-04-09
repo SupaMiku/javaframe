@@ -46,9 +46,10 @@ public class userdashboard extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         userbooks = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        maindesktop = new javax.swing.JDesktopPane();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,7 +75,7 @@ public class userdashboard extends javax.swing.JFrame {
         jLabel1.setText("DASHBOARD");
         dashpanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(dashpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 230, 50));
+        navbar.add(dashpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 230, 50));
 
         usertransactionpanel.setBackground(new java.awt.Color(0, 153, 0));
         usertransactionpanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -113,7 +114,7 @@ public class userdashboard extends javax.swing.JFrame {
 
         usertransactionpanel.add(bookspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 230, 50));
 
-        navbar.add(usertransactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 230, 50));
+        navbar.add(usertransactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 230, 50));
 
         accountpanel.setBackground(new java.awt.Color(0, 153, 0));
         accountpanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -134,7 +135,7 @@ public class userdashboard extends javax.swing.JFrame {
         jLabel6.setText("ACCOUNT");
         accountpanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(accountpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 230, 50));
+        navbar.add(accountpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 230, 50));
 
         userbooks.setBackground(new java.awt.Color(0, 153, 0));
         userbooks.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -155,10 +156,14 @@ public class userdashboard extends javax.swing.JFrame {
         jLabel7.setText("BOOKS");
         userbooks.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(userbooks, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 230, 50));
+        navbar.add(userbooks, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 230, 50));
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-library-building-100 (1).png"))); // NOI18N
+        navbar.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 190, 120));
 
         jPanel2.add(navbar);
-        navbar.setBounds(0, 0, 230, 490);
+        navbar.setBounds(0, 0, 230, 430);
 
         header.setBackground(new java.awt.Color(0, 204, 0));
         header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -171,21 +176,21 @@ public class userdashboard extends javax.swing.JFrame {
         jPanel2.add(header);
         header.setBounds(230, 0, 620, 60);
 
-        maindesktop.setBackground(new java.awt.Color(0, 255, 0));
+        jPanel1.setBackground(new java.awt.Color(51, 255, 51));
 
-        javax.swing.GroupLayout maindesktopLayout = new javax.swing.GroupLayout(maindesktop);
-        maindesktop.setLayout(maindesktopLayout);
-        maindesktopLayout.setHorizontalGroup(
-            maindesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 620, Short.MAX_VALUE)
         );
-        maindesktopLayout.setVerticalGroup(
-            maindesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 430, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 420, Short.MAX_VALUE)
         );
 
-        jPanel2.add(maindesktop);
-        maindesktop.setBounds(250, 60, 620, 430);
+        jPanel2.add(jPanel1);
+        jPanel1.setBounds(230, 60, 620, 420);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -195,7 +200,7 @@ public class userdashboard extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
         );
 
         pack();
@@ -302,13 +307,14 @@ public class userdashboard extends javax.swing.JFrame {
     private javax.swing.JPanel dashpanel;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JDesktopPane maindesktop;
     private javax.swing.JPanel navbar;
     private javax.swing.JPanel userbooks;
     private javax.swing.JPanel usertransactionpanel;

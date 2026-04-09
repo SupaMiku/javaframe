@@ -46,6 +46,7 @@ public class admindashboard extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         accountpanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         maindesktop = new javax.swing.JDesktopPane();
@@ -74,7 +75,7 @@ public class admindashboard extends javax.swing.JFrame {
         jLabel1.setText("DASHBOARD");
         dashpanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(dashpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 230, 50));
+        navbar.add(dashpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 230, 50));
 
         userpanel.setBackground(new java.awt.Color(0, 153, 0));
         userpanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -92,10 +93,10 @@ public class admindashboard extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("USER");
+        jLabel2.setText("USERS");
         userpanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(userpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 230, 50));
+        navbar.add(userpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 230, 50));
 
         bookspanel.setBackground(new java.awt.Color(0, 153, 0));
         bookspanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -116,7 +117,7 @@ public class admindashboard extends javax.swing.JFrame {
         jLabel3.setText("BOOKS");
         bookspanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(bookspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 230, 50));
+        navbar.add(bookspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 230, 50));
 
         transactionpanel.setBackground(new java.awt.Color(0, 153, 0));
         transactionpanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -137,7 +138,7 @@ public class admindashboard extends javax.swing.JFrame {
         jLabel4.setText("BORROW TRANSACTION");
         transactionpanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(transactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 230, 50));
+        navbar.add(transactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 230, 50));
 
         accountpanel.setBackground(new java.awt.Color(0, 153, 0));
         accountpanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -160,6 +161,10 @@ public class admindashboard extends javax.swing.JFrame {
 
         navbar.add(accountpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 230, 50));
 
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-library-building-100 (1).png"))); // NOI18N
+        navbar.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 190, 120));
+
         jPanel2.add(navbar);
         navbar.setBounds(0, 0, 230, 490);
 
@@ -174,7 +179,7 @@ public class admindashboard extends javax.swing.JFrame {
         jPanel2.add(header);
         header.setBounds(180, 0, 670, 60);
 
-        maindesktop.setBackground(new java.awt.Color(0, 255, 0));
+        maindesktop.setBackground(new java.awt.Color(51, 255, 51));
 
         javax.swing.GroupLayout maindesktopLayout = new javax.swing.GroupLayout(maindesktop);
         maindesktop.setLayout(maindesktopLayout);
@@ -315,6 +320,7 @@ public class admindashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JDesktopPane maindesktop;
     private javax.swing.JPanel navbar;

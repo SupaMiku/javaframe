@@ -72,6 +72,8 @@ public class userForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         accountpanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -87,7 +89,7 @@ public class userForm extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(230, 0, 590, 41);
 
-        jPanel2.setBackground(new java.awt.Color(0, 255, 0));
+        jPanel2.setBackground(new java.awt.Color(51, 255, 51));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel5.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
@@ -129,6 +131,7 @@ public class userForm extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(0, 153, 0));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel11.setBackground(new java.awt.Color(51, 255, 51));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("PICTURE");
         jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 210));
@@ -155,7 +158,7 @@ public class userForm extends javax.swing.JFrame {
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, 110, 40));
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(230, 40, 590, 450);
+        jPanel2.setBounds(230, 40, 590, 410);
 
         navbar.setBackground(new java.awt.Color(0, 153, 0));
         navbar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -176,7 +179,7 @@ public class userForm extends javax.swing.JFrame {
         jLabel1.setText("DASHBOARD");
         dashpanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(dashpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 230, 50));
+        navbar.add(dashpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 230, 50));
 
         userpanel.setBackground(new java.awt.Color(0, 153, 0));
         userpanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -197,7 +200,7 @@ public class userForm extends javax.swing.JFrame {
         jLabel2.setText("USER");
         userpanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(userpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 230, 50));
+        navbar.add(userpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 230, 50));
 
         bookspanel.setBackground(new java.awt.Color(0, 153, 0));
         bookspanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -215,7 +218,7 @@ public class userForm extends javax.swing.JFrame {
         jLabel3.setText("BOOKS");
         bookspanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(bookspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 230, 50));
+        navbar.add(bookspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 230, 50));
 
         transactionpanel.setBackground(new java.awt.Color(0, 153, 0));
         transactionpanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -233,7 +236,7 @@ public class userForm extends javax.swing.JFrame {
         jLabel4.setText("BORROW TRANSACTION");
         transactionpanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(transactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 230, 50));
+        navbar.add(transactionpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 230, 50));
 
         accountpanel.setBackground(new java.awt.Color(0, 153, 0));
         accountpanel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -251,10 +254,18 @@ public class userForm extends javax.swing.JFrame {
         jLabel6.setText("ACCOUNT");
         accountpanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(accountpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 230, 50));
+        navbar.add(accountpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 230, 50));
+
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-library-building-100 (1).png"))); // NOI18N
+        navbar.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 190, 140));
+
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-library-building-100 (1).png"))); // NOI18N
+        navbar.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 120));
 
         getContentPane().add(navbar);
-        navbar.setBounds(0, 0, 230, 490);
+        navbar.setBounds(0, 0, 230, 450);
 
         pack();
         setLocationRelativeTo(null);
@@ -373,6 +384,8 @@ public class userForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
