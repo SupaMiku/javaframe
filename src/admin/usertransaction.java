@@ -144,6 +144,7 @@ void displayMyTransactions() {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 255, 0));
@@ -306,6 +307,7 @@ void displayMyTransactions() {
         getContentPane().add(navbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 390));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
@@ -462,15 +464,9 @@ void displayMyTransactions() {
     }//GEN-LAST:event_searchActionPerformed
 
     private void dashpanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpanelMouseClicked
-        String userType = config.session.getInstance().getType();
-    if (userType.equals("USER")) {
-        userdashboard ud = new userdashboard();
-        ud.setVisible(true);
-    } else {
-        admindashboard ad = new admindashboard();
-        ad.setVisible(true);
-    }
-    this.dispose();
+       userdashboard userdash = new userdashboard();
+       userdash.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_dashpanelMouseClicked
 
     /**

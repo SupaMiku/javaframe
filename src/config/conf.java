@@ -29,6 +29,10 @@ public static Connection connectDB() {
         }
         return con;
     }
+
+public Connection getConnection() {
+    return connectDB();
+}
     public void addRecord(String sql, Object... values) {
     try (Connection conn = connectDB();
          PreparedStatement pstmt = conn.prepareStatement(sql)) {

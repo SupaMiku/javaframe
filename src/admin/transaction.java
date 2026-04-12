@@ -21,6 +21,11 @@ public class transaction extends javax.swing.JFrame {
     public transaction() {
         initComponents();
         displayTransactions();
+        dashpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            dashpanelMouseClicked(evt);
+        }
+    });
         // Search column combo
     searchColumn = new javax.swing.JComboBox<>(new String[]{
     "trans_id", "a_id", "user_name", "bok_id", "title",  // ✅ bok_id, title
@@ -124,6 +129,7 @@ void displayMyTransactions() {
         usertable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         navbar.setBackground(new java.awt.Color(0, 153, 0));
@@ -135,6 +141,9 @@ void displayMyTransactions() {
 
         dashpanel.setBackground(new java.awt.Color(0, 153, 0));
         dashpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dashpanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 dashpanelMouseEntered(evt);
             }
@@ -299,6 +308,7 @@ void displayMyTransactions() {
         getContentPane().add(navbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 420));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
@@ -403,8 +413,17 @@ form.setEditMode(trans_id, a_id, user_name, bok_id, title, borrow_date, return_d
     }//GEN-LAST:event_dashpanelMouseExited
 
     private void userpanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpanelMouseClicked
-        userstable us = new userstable();
+         String userType = config.session.getInstance().getType();
+    if (userType.equals("USER")) {
+        // ✅ USER has no user management page — go back to dashboard
+        userdashboard ud = new userdashboard();
+        ud.setVisible(true);
+    } else {
+        // ✅ ADMIN goes to adminuserstable, not userstable
+        adminuserstable us = new adminuserstable();
         us.setVisible(true);
+    }
+    this.dispose();
     }//GEN-LAST:event_userpanelMouseClicked
 
     private void userpanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpanelMouseEntered
@@ -450,6 +469,18 @@ form.setEditMode(trans_id, a_id, user_name, bok_id, title, borrow_date, return_d
     private void accountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountMouseExited
         account.setBackground(navcolor);
     }//GEN-LAST:event_accountMouseExited
+
+    private void dashpanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpanelMouseClicked
+       String userType = config.session.getInstance().getType();
+    if (userType.equals("USER")) {
+        userdashboard ud = new userdashboard();
+        ud.setVisible(true);
+    } else {
+        admindashboard ad = new admindashboard();
+        ad.setVisible(true);
+    }
+    this.dispose();
+    }//GEN-LAST:event_dashpanelMouseClicked
 
     /**
      * @param args the command line arguments

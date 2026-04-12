@@ -113,6 +113,7 @@ if (userType.equals("USER")) {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(51, 255, 51));
@@ -184,6 +185,9 @@ if (userType.equals("USER")) {
 
         dashpanel.setBackground(new java.awt.Color(0, 153, 0));
         dashpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dashpanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 dashpanelMouseEntered(evt);
             }
@@ -288,6 +292,7 @@ if (userType.equals("USER")) {
         getContentPane().add(navbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 420));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
@@ -436,6 +441,12 @@ if (userType.equals("USER")) {
         user.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_accountMouseClicked
+
+    private void dashpanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpanelMouseClicked
+        userdashboard userdash = new userdashboard();
+       userdash.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_dashpanelMouseClicked
 
     /**
      * @param args the command line arguments

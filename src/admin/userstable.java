@@ -90,7 +90,7 @@ public class userstable extends javax.swing.JFrame {
     
     void displayUsers(){
         conf con = new conf();
-        String sql = "Select * FROM tbl_acc";
+        String sql = "SELECT a_id, name, email, password, gender, type, status, address, profile_pic FROM tbl_acc";
         con.displayData(sql, usertable);
     
     }
@@ -142,6 +142,7 @@ public class userstable extends javax.swing.JFrame {
         header.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 17, 620, 30));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(null);
 
         navbar.setBackground(new java.awt.Color(0, 153, 0));
@@ -411,9 +412,9 @@ String em   = safeGet(row, 2);  // email
 String gen  = safeGet(row, 4);  // gender  ← skip pass(3)
 String typ  = safeGet(row, 5);  // type
 String adr  = safeGet(row, 7);  // address ← skip status(6)
-
+String pic  = safeGet(row, 8); // profile_pic ✅
 AddEditUser form = new AddEditUser();
-form.setEditMode(a_id, adr, nam, em, gen, typ, adr);
+form.setEditMode(a_id, adr, nam, em, gen, typ, adr, pic);
         form.setVisible(true);
 
         form.addWindowListener(new java.awt.event.WindowAdapter() {

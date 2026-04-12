@@ -19,7 +19,77 @@ public class admindashboard extends javax.swing.JFrame {
      */
     public admindashboard() {
         initComponents();
+        loadDashboardStats();
     }
+    private void loadDashboardStats() {
+    try {
+        java.sql.Connection conn = config.conf.connectDB();
+
+        // Total Users
+        int users = getCount(conn, "SELECT COUNT(*) FROM tbl_acc");
+        // Total Books
+        int books = getCount(conn, "SELECT COUNT(*) FROM tbl_books");
+        // Total Transactions
+        int transactions = getCount(conn, "SELECT COUNT(*) FROM tbl_transaction");
+        // Borrowed
+        int borrowed = getCount(conn, "SELECT COUNT(*) FROM tbl_transaction WHERE status='Borrowed'");
+        // Returned
+        int returned = getCount(conn, "SELECT COUNT(*) FROM tbl_transaction WHERE status='Returned'");
+
+        conn.close();
+
+        // ✅ Build stats panel
+        javax.swing.JPanel statsPanel = new javax.swing.JPanel();
+        statsPanel.setLayout(new java.awt.GridLayout(2, 3, 15, 15));
+        statsPanel.setBackground(new java.awt.Color(51, 255, 51));
+        statsPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        statsPanel.add(createCard("TOTAL USERS", users, new java.awt.Color(0, 153, 0)));
+        statsPanel.add(createCard("TOTAL BOOKS", books, new java.awt.Color(0, 153, 0)));
+        statsPanel.add(createCard("TRANSACTIONS", transactions, new java.awt.Color(0, 153, 0)));
+        statsPanel.add(createCard("BORROWED", borrowed, new java.awt.Color(0, 102, 0)));
+        statsPanel.add(createCard("RETURNED", returned, new java.awt.Color(0, 102, 0)));
+
+        statsPanel.setBounds(10, 10, 600, 410);
+        maindesktop.add(statsPanel);
+        maindesktop.revalidate();
+        maindesktop.repaint();
+
+    } catch (Exception e) {
+        System.out.println("Dashboard error: " + e.getMessage());
+    }
+}
+
+private int getCount(java.sql.Connection conn, String sql) {
+    try {
+        java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+        java.sql.ResultSet rs = ps.executeQuery();
+        if (rs.next()) return rs.getInt(1);
+    } catch (Exception e) {
+        System.out.println("Count error: " + e.getMessage());
+    }
+    return 0;
+}
+
+private javax.swing.JPanel createCard(String title, int count, java.awt.Color color) {
+    javax.swing.JPanel card = new javax.swing.JPanel();
+    card.setBackground(color);
+    card.setLayout(new java.awt.BorderLayout());
+    card.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.BLACK, 2));
+
+    javax.swing.JLabel titleLabel = new javax.swing.JLabel(title, javax.swing.SwingConstants.CENTER);
+    titleLabel.setFont(new java.awt.Font("Arial Black", java.awt.Font.BOLD, 12));
+    titleLabel.setForeground(java.awt.Color.WHITE);
+
+    javax.swing.JLabel countLabel = new javax.swing.JLabel(String.valueOf(count), javax.swing.SwingConstants.CENTER);
+    countLabel.setFont(new java.awt.Font("Arial Black", java.awt.Font.BOLD, 36));
+    countLabel.setForeground(java.awt.Color.WHITE);
+
+    card.add(titleLabel, java.awt.BorderLayout.NORTH);
+    card.add(countLabel, java.awt.BorderLayout.CENTER);
+
+    return card;
+}
     
     Color navcolor = new Color (0,153,0);
     Color headercolor = new Color (0,204,0);
@@ -52,6 +122,7 @@ public class admindashboard extends javax.swing.JFrame {
         maindesktop = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel2.setBackground(new java.awt.Color(51, 255, 51));
         jPanel2.setLayout(null);
@@ -203,7 +274,7 @@ public class admindashboard extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
         );
 
         pack();

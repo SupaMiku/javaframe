@@ -22,6 +22,13 @@ public class adminuserstable extends javax.swing.JFrame {
         initComponents();
         
         displayUsers();
+        dashpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            admindashboard ad = new admindashboard();
+            ad.setVisible(true);
+            dispose();
+        }
+    });
         
         searchColumn = new javax.swing.JComboBox<>(new String[]{
     "a_id", "name", "email", "gender", "type", "status", "address"  // ← added a_id
@@ -71,14 +78,15 @@ public class adminuserstable extends javax.swing.JFrame {
     }
 
     // ✅ Search ALL columns at once
-    String sql = "SELECT * FROM tbl_acc WHERE "
-        + "CAST(a_id AS TEXT) LIKE ? OR "
-        + "name LIKE ? OR "
-        + "email LIKE ? OR "
-        + "gender LIKE ? OR "
-        + "type LIKE ? OR "
-        + "status LIKE ? OR "
-        + "address LIKE ?";
+    String sql = "SELECT a_id, name, email, password, gender, type, status, address, profile_pic "
+           + "FROM tbl_acc WHERE "
+           + "CAST(a_id AS TEXT) LIKE ? OR "
+           + "name LIKE ? OR "
+           + "email LIKE ? OR "
+           + "gender LIKE ? OR "
+           + "type LIKE ? OR "
+           + "status LIKE ? OR "
+           + "address LIKE ?";
 
     String kw = "%" + keyword + "%";
 
@@ -88,12 +96,12 @@ public class adminuserstable extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> searchColumn;
     
     
-    void displayUsers(){
-        conf con = new conf();
-        String sql = "Select * FROM tbl_acc";
-        con.displayData(sql, usertable);
-    
-    }
+   void displayUsers() {
+   config.conf con = new config.conf();
+    con.displayData(
+        "SELECT a_id, name, email, gender, type, status, address FROM tbl_acc",
+        usertable);
+}
    
     Color navcolor = new Color (0,153,0);
     Color headercolor = new Color (0,204,0);
@@ -345,8 +353,7 @@ public class adminuserstable extends javax.swing.JFrame {
     }//GEN-LAST:event_dashpanelMouseExited
 
     private void userpanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpanelMouseClicked
-        adminuserstable us = new adminuserstable();
-    us.setVisible(true);
+       
     }//GEN-LAST:event_userpanelMouseClicked
 
     private void userpanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpanelMouseEntered
@@ -417,9 +424,10 @@ String em   = safeGet(row, 2);  // email
 String gen  = safeGet(row, 4);  // gender  ← skip pass(3)
 String typ  = safeGet(row, 5);  // type
 String adr  = safeGet(row, 7);  // address ← skip status(6)
-
+String pic  = " "; // profile_pic ✅
 AddEditUser form = new AddEditUser();
-form.setEditMode(a_id, adr, nam, em, gen, typ, adr);
+String uid = String.valueOf(a_id);
+form.setEditMode(a_id, uid, nam, em, gen, typ, adr, pic);
         form.setVisible(true);
 
         form.addWindowListener(new java.awt.event.WindowAdapter() {

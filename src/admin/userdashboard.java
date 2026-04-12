@@ -19,7 +19,90 @@ public class userdashboard extends javax.swing.JFrame {
      */
     public userdashboard() {
         initComponents();
+       loadUserDashboardStats();
     }
+    private void loadUserDashboardStats() {
+    try {
+        int a_id = config.session.getInstance().getA_id();
+        String name = config.session.getInstance().getUsername();
+
+        java.sql.Connection conn = config.conf.connectDB();
+
+        // Stats for THIS user only
+        int myTransactions = getCount(conn,
+            "SELECT COUNT(*) FROM tbl_transaction WHERE a_id = " + a_id);
+        int myBorrowed = getCount(conn,
+            "SELECT COUNT(*) FROM tbl_transaction WHERE a_id = " + a_id + " AND status='Borrowed'");
+        int myReturned = getCount(conn,
+            "SELECT COUNT(*) FROM tbl_transaction WHERE a_id = " + a_id + " AND status='Returned'");
+        int totalBooks = getCount(conn,
+            "SELECT COUNT(*) FROM tbl_books");
+        int availableBooks = getCount(conn,
+            "SELECT COUNT(*) FROM tbl_books WHERE status='Available'");
+
+        conn.close();
+
+        // ✅ Welcome label
+        javax.swing.JLabel welcomeLabel = new javax.swing.JLabel(
+            "Welcome, " + name + "!", javax.swing.SwingConstants.CENTER);
+        welcomeLabel.setFont(new java.awt.Font("Arial Black", java.awt.Font.BOLD, 16));
+        welcomeLabel.setForeground(new java.awt.Color(0, 102, 0));
+        welcomeLabel.setBounds(10, 10, 600, 35);
+        jPanel1.add(welcomeLabel);
+
+        // ✅ Stats panel
+        javax.swing.JPanel statsPanel = new javax.swing.JPanel();
+        statsPanel.setLayout(new java.awt.GridLayout(2, 3, 15, 15));
+        statsPanel.setBackground(new java.awt.Color(51, 255, 51));
+        statsPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        statsPanel.setBounds(10, 55, 600, 340);
+
+        statsPanel.add(createCard("MY TRANSACTIONS", myTransactions, new java.awt.Color(0, 153, 0)));
+        statsPanel.add(createCard("BORROWED", myBorrowed, new java.awt.Color(0, 102, 0)));
+        statsPanel.add(createCard("RETURNED", myReturned, new java.awt.Color(0, 153, 51)));
+        statsPanel.add(createCard("TOTAL BOOKS", totalBooks, new java.awt.Color(0, 153, 0)));
+        statsPanel.add(createCard("AVAILABLE BOOKS", availableBooks, new java.awt.Color(0, 102, 0)));
+
+        jPanel1.setLayout(null);
+        jPanel1.add(statsPanel);
+        jPanel1.revalidate();
+        jPanel1.repaint();
+
+    } catch (Exception e) {
+        System.out.println("User dashboard error: " + e.getMessage());
+    }
+}
+
+private int getCount(java.sql.Connection conn, String sql) {
+    try {
+        java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+        java.sql.ResultSet rs = ps.executeQuery();
+        if (rs.next()) return rs.getInt(1);
+    } catch (Exception e) {
+        System.out.println("Count error: " + e.getMessage());
+    }
+    return 0;
+}
+
+private javax.swing.JPanel createCard(String title, int count, java.awt.Color color) {
+    javax.swing.JPanel card = new javax.swing.JPanel();
+    card.setBackground(color);
+    card.setLayout(new java.awt.BorderLayout());
+    card.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.BLACK, 2));
+
+    javax.swing.JLabel titleLabel = new javax.swing.JLabel(title, javax.swing.SwingConstants.CENTER);
+    titleLabel.setFont(new java.awt.Font("Arial Black", java.awt.Font.BOLD, 11));
+    titleLabel.setForeground(java.awt.Color.WHITE);
+
+    javax.swing.JLabel countLabel = new javax.swing.JLabel(String.valueOf(count), javax.swing.SwingConstants.CENTER);
+    countLabel.setFont(new java.awt.Font("Arial Black", java.awt.Font.BOLD, 36));
+    countLabel.setForeground(java.awt.Color.WHITE);
+
+    card.add(titleLabel, java.awt.BorderLayout.NORTH);
+    card.add(countLabel, java.awt.BorderLayout.CENTER);
+
+    return card;
+}
     
     Color navcolor = new Color (0,153,0);
     Color headercolor = new Color (0,204,0);
@@ -52,6 +135,7 @@ public class userdashboard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel2.setBackground(new java.awt.Color(51, 255, 51));
         jPanel2.setLayout(null);
@@ -135,7 +219,7 @@ public class userdashboard extends javax.swing.JFrame {
         jLabel6.setText("ACCOUNT");
         accountpanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 230, 28));
 
-        navbar.add(accountpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 230, 50));
+        navbar.add(accountpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 230, 50));
 
         userbooks.setBackground(new java.awt.Color(0, 153, 0));
         userbooks.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -163,7 +247,7 @@ public class userdashboard extends javax.swing.JFrame {
         navbar.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 190, 120));
 
         jPanel2.add(navbar);
-        navbar.setBounds(0, 0, 230, 430);
+        navbar.setBounds(0, 0, 230, 460);
 
         header.setBackground(new java.awt.Color(0, 204, 0));
         header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -171,7 +255,7 @@ public class userdashboard extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("USER DASHBOARD");
-        header.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 620, 40));
+        header.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 590, 40));
 
         jPanel2.add(header);
         header.setBounds(230, 0, 620, 60);
@@ -182,25 +266,25 @@ public class userdashboard extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
+            .addGap(0, 590, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
 
         jPanel2.add(jPanel1);
-        jPanel1.setBounds(230, 60, 620, 420);
+        jPanel1.setBounds(230, 60, 590, 400);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 849, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
         );
 
         pack();

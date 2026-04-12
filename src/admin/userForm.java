@@ -20,6 +20,71 @@ public class userForm extends javax.swing.JFrame {
     public userForm() {
         initComponents();
          loadUserProfile();
+         
+         String userType = config.session.getInstance().getType();
+    if (userType.equals("USER")) {
+        userpanel.setVisible(false);
+        
+        
+    navbar.remove(bookspanel);
+    navbar.remove(transactionpanel);
+    navbar.remove(accountpanel);
+
+    navbar.add(bookspanel,
+        new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 230, 50));
+    navbar.add(transactionpanel,
+        new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 230, 50));
+    navbar.add(accountpanel,
+        new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 230, 50));
+
+    navbar.revalidate();
+    navbar.repaint();
+    }
+
+         dashpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            String userType = config.session.getInstance().getType();
+            if (userType.equals("USER")) {
+                userdashboard ud = new userdashboard();
+                ud.setVisible(true);
+            } else {
+                admindashboard ad = new admindashboard();
+                ad.setVisible(true);
+            }
+            dispose();
+        }
+    });
+         bookspanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            String userType = config.session.getInstance().getType();
+            if (userType.equals("USER")) {
+                userbooks ub = new userbooks();
+                ub.setVisible(true);
+            } else {
+                books bk = new books();
+                bk.setVisible(true);
+            }
+            dispose();
+        }
+    });
+         transactionpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            String userType = config.session.getInstance().getType();
+            if (userType.equals("USER")) {
+                usertransaction ut = new usertransaction();
+                ut.setVisible(true);
+            } else {
+                transaction tr = new transaction();
+                tr.setVisible(true);
+            }
+            dispose();
+        }
+    });
+          accountpanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            // already on account page — do nothing
+        }
+    });
     }
     private void loadUserProfile() {
          config.session s = config.session.getInstance();
@@ -28,6 +93,43 @@ public class userForm extends javax.swing.JFrame {
     email.setText(s.getEmail());
     status.setText(s.getStatus());
     type.setText(s.getType()); // ✅ Shows "ADMIN" or "USER"
+    
+    try {
+        config.conf con = new config.conf();
+        java.sql.Connection connection = con.getConnection();
+        java.sql.PreparedStatement ps = connection.prepareStatement(
+            "SELECT profile_pic FROM tbl_acc WHERE a_id = ?");
+        ps.setInt(1, s.getA_id());
+        java.sql.ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            String imgPath = rs.getString("profile_pic");
+            displayProfilePic(imgPath);
+        }
+
+        rs.close();
+        ps.close();
+        connection.close();
+
+    } catch (Exception e) {
+        pic.setText("No Image");
+    }
+}
+    private void displayProfilePic(String path) {
+    if (path == null || path.trim().isEmpty()) {
+        pic.setIcon(null);
+        pic.setText("No Image");
+        return;
+    }
+    try {
+        java.awt.Image img = new javax.swing.ImageIcon(path).getImage()
+            .getScaledInstance(240, 210, java.awt.Image.SCALE_SMOOTH);
+        pic.setIcon(new javax.swing.ImageIcon(img));
+        pic.setText("");
+    } catch (Exception e) {
+        pic.setIcon(null);
+        pic.setText("Invalid Image");
+    }
 }
 
     Color navcolor = new Color (0,153,0);
@@ -53,7 +155,7 @@ public class userForm extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         logout = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
+        pic = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         type = new javax.swing.JLabel();
         id = new javax.swing.JLabel();
@@ -131,10 +233,10 @@ public class userForm extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(0, 153, 0));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel11.setBackground(new java.awt.Color(51, 255, 51));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("PICTURE");
-        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 210));
+        pic.setBackground(new java.awt.Color(51, 255, 51));
+        pic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pic.setText("PICTURE");
+        jPanel3.add(pic, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 210));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, 240, 210));
 
@@ -280,9 +382,16 @@ public class userForm extends javax.swing.JFrame {
     }//GEN-LAST:event_dashpanelMouseExited
 
     private void userpanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpanelMouseClicked
-        userstable us = new userstable();
+        String userType = config.session.getInstance().getType();
+    if (userType.equals("ADMIN")) {
+        adminuserstable us = new adminuserstable(); // ✅ ADMIN
         us.setVisible(true);
-        this.dispose();
+    } else {
+        // USER has no user management — go to dashboard
+        userdashboard ud = new userdashboard();
+        ud.setVisible(true);
+    }
+    this.dispose();
     }//GEN-LAST:event_userpanelMouseClicked
 
     private void userpanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpanelMouseEntered
@@ -330,7 +439,51 @@ public class userForm extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        
+         config.session s = config.session.getInstance();
+
+    // ✅ Fetch full user data from DB including profile_pic
+    try {
+        config.conf con = new config.conf();
+        java.sql.Connection connection = con.getConnection();
+        java.sql.PreparedStatement ps = connection.prepareStatement(
+            "SELECT a_id, name, email, gender, type, address, profile_pic " +
+            "FROM tbl_acc WHERE a_id = ?");
+        ps.setInt(1, s.getA_id());
+        java.sql.ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            int    a_id    = rs.getInt("a_id");
+            String name    = rs.getString("name");
+            String email   = rs.getString("email");
+            String gender  = rs.getString("gender");
+            String type    = rs.getString("type");
+            String address = rs.getString("address");
+            String pic     = rs.getString("profile_pic");
+
+            AddEditUser form = new AddEditUser();
+            form.setEditMode(a_id, String.valueOf(a_id), name, email,
+                             gender, type, address, pic != null ? pic : "");
+            form.setVisible(true);
+
+            // ✅ Refresh profile page after editing
+            form.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent e) {
+                    loadUserProfile();
+                }
+            });
+        }
+
+        rs.close();
+        ps.close();
+        connection.close();
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Error loading user data: " + e.getMessage(),
+            "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
@@ -381,7 +534,6 @@ public class userForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -399,6 +551,7 @@ public class userForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JButton logout;
     private javax.swing.JPanel navbar;
+    private javax.swing.JLabel pic;
     private javax.swing.JLabel status;
     private javax.swing.JPanel transactionpanel;
     private javax.swing.JLabel type;
