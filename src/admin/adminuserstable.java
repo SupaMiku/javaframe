@@ -419,11 +419,11 @@ public class adminuserstable extends javax.swing.JFrame {
         // Column order from tbl_acc: a_id, name, email, gender, type, address ...
         // Adjust column indices to match your actual SELECT * result
         int    a_id = Integer.parseInt(safeGet(row, 0));
-String nam  = safeGet(row, 1);  // name
-String em   = safeGet(row, 2);  // email
-String gen  = safeGet(row, 4);  // gender  ← skip pass(3)
-String typ  = safeGet(row, 5);  // type
-String adr  = safeGet(row, 7);  // address ← skip status(6)
+String nam  = safeGet(row, 1);
+String em   = safeGet(row, 2);
+String gen  = safeGet(row, 3);  // ✅ FIXED
+String typ  = safeGet(row, 4);  // ✅ FIXED
+String adr  = safeGet(row, 6);
 String pic  = " "; // profile_pic ✅
 AddEditUser form = new AddEditUser();
 String uid = String.valueOf(a_id);
