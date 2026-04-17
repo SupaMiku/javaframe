@@ -59,6 +59,10 @@ public void setEditMode(int a_id, String uid, String nam, String em,
             selectedGender = "Female";
         }
     }
+    
+    if (typ != null) {
+    jComboBox1.setSelectedItem(typ.toUpperCase());
+}
 
 
     setTitle("Edit User – ID: " + a_id);
@@ -174,6 +178,8 @@ private void clearAllFields() {
         male = new javax.swing.JRadioButton();
         female = new javax.swing.JRadioButton();
         id = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        genderLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -222,18 +228,18 @@ private void clearAllFields() {
         jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 130, 30));
 
         genderLabel.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
-        genderLabel.setText("Gender:");
-        jPanel1.add(genderLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 60, 30));
+        genderLabel.setText("Type:");
+        jPanel1.add(genderLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 60, 30));
 
         address.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         address.setText("Address:");
-        jPanel1.add(address, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 60, 30));
+        jPanel1.add(address, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 60, 30));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 160, 80));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 160, 80));
 
         profile.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -246,7 +252,7 @@ private void clearAllFields() {
         jLabel3.setText("IMAGE");
         profile.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 150, 108));
 
-        jPanel1.add(profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 170, 130));
+        jPanel1.add(profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, 170, 130));
 
         userlabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -260,7 +266,7 @@ private void clearAllFields() {
         user_label.setText("LABEL");
         userlabel.add(user_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 120, -1));
 
-        jPanel1.add(userlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 120, 40));
+        jPanel1.add(userlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 340, 120, 40));
 
         male.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         male.setText("MALE");
@@ -280,6 +286,18 @@ private void clearAllFields() {
         });
         jPanel1.add(female, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 70, 30));
         jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 130, 30));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMIN", "USER" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 150, 30));
+
+        genderLabel1.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        genderLabel1.setText("Gender:");
+        jPanel1.add(genderLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 60, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -306,8 +324,9 @@ private void clearAllFields() {
 
     private void userlabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userlabelMouseClicked
          if (username.getText().trim().isEmpty() ||
-            email.getText().trim().isEmpty()    ||
-            selectedGender.isEmpty()) {
+    email.getText().trim().isEmpty() ||
+    selectedGender.isEmpty() ||
+    jComboBox1.getSelectedItem() == null) {
 
             JOptionPane.showMessageDialog(this,
                 "Please fill in Username, Email, and Gender.",
@@ -322,7 +341,7 @@ private void clearAllFields() {
         String nameVal    = username.getText().trim();
         String emailVal   = email.getText().trim();
         String genderVal  = selectedGender;
-         String typeVal    = config.session.getInstance().getType(); // ✅ from session
+        String typeVal = jComboBox1.getSelectedItem().toString();
         String addressVal = jTextArea1.getText().trim();
         String statusVal  = "Active";
          String imgVal     = selectedImagePath != null ? selectedImagePath : ""; // ✅
@@ -368,6 +387,10 @@ success = con.executeUpdate(sql,
         // TODO add your handling code here:
     }//GEN-LAST:event_profileMouseClicked
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -408,7 +431,9 @@ success = con.executeUpdate(sql,
     private javax.swing.JTextField email;
     public javax.swing.JRadioButton female;
     private javax.swing.JLabel genderLabel;
+    private javax.swing.JLabel genderLabel1;
     private javax.swing.JLabel id;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
